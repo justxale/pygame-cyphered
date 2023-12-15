@@ -1,9 +1,8 @@
 import pygame
 from cyphered.ui import Button
-from cyphered.ui.Text_displ import text_displ
 from cyphered.ui.Multiple_text_displ import multiple_text_discpl
 from cyphered.data import constants
-from cyphered.ui.Sounds import SoundPlayer
+from cyphered.services.sound import SoundMixer
 
 with open('./gamedata/settings.txt') as f:
     rightleft, jump, music = tuple(map(str, f.readline().split(',')))
@@ -17,7 +16,7 @@ start_button_clicked = False  # переменная нажатия кнопки
 background_lookaround_button_clicked = False  # кнопка осмотреться в предыстории
 settings_button_clicked = False  # кнопка настроек
 flag = True  # вспомогательная переменная для плеера
-player = SoundPlayer()  # объект класса плеера
+player = SoundMixer()  # объект класса плеера
 
 while running:
 
