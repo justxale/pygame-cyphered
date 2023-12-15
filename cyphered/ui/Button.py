@@ -2,10 +2,10 @@ import pygame
 
 
 # функция для создания кнопки
-# в качестве аргументов принимает ширину и высоту экрана, тект, цвет текста, насколько от середины отодвинуть
+# в качестве аргументов принимает ширину и высоту экрана, тект, шрифт, цвет текста, насколько от середины отодвинуть
 # текст по x и y, размер шрифта
-def get_component_button(screen_width, screen_height, text, color=(255, 255, 255), step_x=0, step_y=0, font_size=50):
-    font = pygame.font.Font(None, font_size)  # надо спросить у Артема, тк я сама не понимаю, какой путь прописывать
+def get_component_button(screen_width, screen_height, text, fontt=None, color=(255, 255, 255), step_x=0, step_y=0, font_size=50):
+    font = pygame.font.Font(fontt, font_size)  # надо спросить у Артема, тк я сама не понимаю, какой путь прописывать
     # нужно для шрифта
     text_surface = font.render(text, True, color)
 

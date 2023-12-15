@@ -37,11 +37,12 @@ while running:
     while not start_button_clicked and running:
 
         screen.fill((0, 0, 0))
-        start_button = get_component_button(1280, 720, "Играть")
+        start_button = get_component_button(1280, 720, "Играть", fontt='./Resources/font.ttf')
         pygame.draw.rect(screen, (0, 0, 0), start_button[2])
         screen.blit(start_button[0], start_button[1])
 
-        settings_button = get_component_button(1280, 720, "Настройки", step_x=500, step_y=-300)
+        settings_button = get_component_button(1280, 720, "Настройки", step_x=500, step_y=-300,
+                                               fontt='./Resources/font.ttf')
         pygame.draw.rect(screen, (0, 0, 0), settings_button[2])
         screen.blit(settings_button[0], settings_button[1])
 
@@ -63,14 +64,14 @@ while running:
 
         jump_button = get_component_button(1280, 720, "Прыжок", font_size=30, step_x=-150)
         rightleft_button = get_component_button(1280, 720, "Управление кнопками влево-вправо", step_x=300,
-                                                font_size=35)
+                                                font_size=35, fontt='./Resources/font.ttf')
         while settings_button_clicked and running:
             screen.fill("black")
             color_music_button = 'green'
             if music == 'on':
                 color_music_button = 'red'
             music_button = get_component_button(1280, 720, "Музыка", color=color_music_button, step_x=-400,
-                                                font_size=35)
+                                                font_size=35, fontt='./Resources/font.ttf')
             pygame.draw.rect(screen, (0, 0, 0), music_button[2])
             screen.blit(music_button[0], music_button[1])
 
@@ -91,7 +92,7 @@ while running:
                             if music == 'on':
                                 music = 'off'
                                 music_button = get_component_button(1280, 720, "Музыка", color="red", step_x=-400,
-                                                                    font_size=35)
+                                                                    font_size=35, fontt='./Resources/font.ttf')
                                 pygame.draw.rect(screen, (0, 0, 0), music_button[2])
                                 screen.blit(music_button[0], music_button[1])
                             else:
@@ -99,7 +100,7 @@ while running:
                                 screen.fill(pygame.Color('black'), (music_button[3], music_button[4], music_button[5],
                                                                     music_button[6]))
                                 music_button = get_component_button(1280, 720, "Музыка", color="green", step_x=-400,
-                                                                    font_size=35)
+                                                                    font_size=35, fontt='./Resources/font.ttf')
                                 pygame.draw.rect(screen, (0, 0, 0), music_button[2])
                                 screen.blit(music_button[0], music_button[1])
 
@@ -110,7 +111,8 @@ while running:
     while not background_lookaround_button_clicked and running:
 
         screen.fill((0, 0, 0))
-        background_lookaround_button = get_component_button(1280, 720, "Осмотреться", step_x=500, step_y=-200)
+        background_lookaround_button = get_component_button(1280, 720, "Осмотреться", step_x=500, step_y=-200,
+                                                            fontt='./Resources/font.ttf')
         pygame.draw.rect(screen, (0, 0, 0), background_lookaround_button[2])
         screen.blit(background_lookaround_button[0], background_lookaround_button[1])
 
