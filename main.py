@@ -1,5 +1,5 @@
 import pygame
-from cyphered.ui.Button import get_component_button
+from cyphered.ui import Button
 from cyphered.ui.Text_displ import text_displ
 from cyphered.ui.Multiple_text_displ import multiple_text_discpl
 from cyphered.data import constants
@@ -26,7 +26,7 @@ while running:
     while not start_button_clicked and running:
 
         screen.fill((0, 0, 0))
-        start_button = get_component_button(1280, 720, "Играть")
+        start_button = Button("Играть")
         pygame.draw.rect(screen, (0, 0, 0), start_button[2])
         screen.blit(start_button[0], start_button[1])
         pygame.display.flip()
@@ -47,7 +47,7 @@ while running:
     while not background_lookaround_button_clicked and running:
 
         screen.fill((0, 0, 0))
-        background_lookaround_button = get_component_button(1280, 720, "Осмотреться", step_x=500, step_y=-200)
+        background_lookaround_button = Button("Осмотреться", step_x=500, step_y=-200)
         pygame.draw.rect(screen, (0, 0, 0), background_lookaround_button[2])
         screen.blit(background_lookaround_button[0], background_lookaround_button[1])
 
