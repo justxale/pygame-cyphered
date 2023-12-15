@@ -5,7 +5,7 @@ from cyphered.ui.Multiple_text_displ import multiple_text_discpl
 from cyphered.data import constants
 from cyphered.ui.Sounds import SoundPlayer
 
-with open('./Resources/settings') as f:
+with open('./gamedata/settings.txt') as f:
     rightleft, jump, music = tuple(map(str, f.readline().split(',')))
 
 # pygame setup
@@ -22,7 +22,7 @@ player = SoundPlayer()  # объект класса плеера
 while running:
 
     if music == 'on' and flag:
-        player.play_music("Resources/background_music.mp3")
+        player.play_music("resources/music/background_music.mp3")
         flag = False
 
     # poll for events
@@ -42,8 +42,8 @@ while running:
         pygame.draw.rect(screen, (0, 0, 0), start_button[2])
         screen.blit(start_button[0], start_button[1])
 
-        settings_button = get_component_button(1280, 720, "Настройки", step_x=500, step_y=-300,
-                                               fontt='./Resources/font.ttf')
+        settings_button = Button("Настройки", step_x=500, step_y=-300)
+        # fontt='./Resources/font.ttf')
         pygame.draw.rect(screen, (0, 0, 0), settings_button[2])
         screen.blit(settings_button[0], settings_button[1])
 
@@ -63,16 +63,16 @@ while running:
                         settings_button_clicked = True
                         break
 
-        jump_button = get_component_button(1280, 720, "Прыжок", font_size=30, step_x=-170, fontt='./Resources/font.ttf')
-        rightleft_button = get_component_button(1280, 720, "Управление кнопками влево-вправо", step_x=300,
-                                                font_size=35, fontt='./Resources/font.ttf')
+        jump_button = Button( "Прыжок", font_size=30, step_x=-170) # fontt='./Resources/font.ttf')
+        rightleft_button = Button("Управление кнопками влево-вправо", step_x=300,
+                                  font_size=35)  # fontt='./Resources/font.ttf')
         while settings_button_clicked and running:
             screen.fill("black")
-            color_music_button = 'green'
+            color_music_button = (0, 255, 0)
             if music == 'on':
-                color_music_button = 'red'
-            music_button = get_component_button(1280, 720, "Музыка", color=color_music_button, step_x=-430,
-                                                font_size=35, fontt='./Resources/font.ttf')
+                color_music_button = (255, 0, 0)
+            music_button = Button("Музыка", font_color=color_music_button, step_x=-430,
+                                  font_size=35)  # fontt='./Resources/font.ttf')
             pygame.draw.rect(screen, (0, 0, 0), music_button[2])
             screen.blit(music_button[0], music_button[1])
 
@@ -92,16 +92,16 @@ while running:
                         if music_button[2].collidepoint(mouse_pos):
                             if music == 'on':
                                 music = 'off'
-                                music_button = get_component_button(1280, 720, "Музыка", color="red", step_x=-430,
-                                                                    font_size=35, fontt='./Resources/font.ttf')
+                                music_button = Button("Музыка", font_color=(255, 0, 0), step_x=-430,
+                                                      font_size=35)  # fontt='./Resources/font.ttf')
                                 pygame.draw.rect(screen, (0, 0, 0), music_button[2])
                                 screen.blit(music_button[0], music_button[1])
                             else:
                                 music = 'on'
                                 screen.fill(pygame.Color('black'), (music_button[3], music_button[4], music_button[5],
                                                                     music_button[6]))
-                                music_button = get_component_button(1280, 720, "Музыка", color="green", step_x=-430,
-                                                                    font_size=35, fontt='./Resources/font.ttf')
+                                music_button = Button("Музыка", font_color=(0, 255, 0), step_x=-430,
+                                                      font_size=35)  # fontt='./Resources/font.ttf')
                                 pygame.draw.rect(screen, (0, 0, 0), music_button[2])
                                 screen.blit(music_button[0], music_button[1])
 
