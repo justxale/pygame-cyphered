@@ -62,7 +62,7 @@ while running:
                         settings_button_clicked = True
                         break
 
-        jump_button = get_component_button(1280, 720, "Прыжок", font_size=30, step_x=-150)
+        jump_button = get_component_button(1280, 720, "Прыжок", font_size=30, step_x=-170, fontt='./Resources/font.ttf')
         rightleft_button = get_component_button(1280, 720, "Управление кнопками влево-вправо", step_x=300,
                                                 font_size=35, fontt='./Resources/font.ttf')
         while settings_button_clicked and running:
@@ -70,7 +70,7 @@ while running:
             color_music_button = 'green'
             if music == 'on':
                 color_music_button = 'red'
-            music_button = get_component_button(1280, 720, "Музыка", color=color_music_button, step_x=-400,
+            music_button = get_component_button(1280, 720, "Музыка", color=color_music_button, step_x=-430,
                                                 font_size=35, fontt='./Resources/font.ttf')
             pygame.draw.rect(screen, (0, 0, 0), music_button[2])
             screen.blit(music_button[0], music_button[1])
@@ -91,7 +91,7 @@ while running:
                         if music_button[2].collidepoint(mouse_pos):
                             if music == 'on':
                                 music = 'off'
-                                music_button = get_component_button(1280, 720, "Музыка", color="red", step_x=-400,
+                                music_button = get_component_button(1280, 720, "Музыка", color="red", step_x=-430,
                                                                     font_size=35, fontt='./Resources/font.ttf')
                                 pygame.draw.rect(screen, (0, 0, 0), music_button[2])
                                 screen.blit(music_button[0], music_button[1])
@@ -99,7 +99,7 @@ while running:
                                 music = 'on'
                                 screen.fill(pygame.Color('black'), (music_button[3], music_button[4], music_button[5],
                                                                     music_button[6]))
-                                music_button = get_component_button(1280, 720, "Музыка", color="green", step_x=-400,
+                                music_button = get_component_button(1280, 720, "Музыка", color="green", step_x=-430,
                                                                     font_size=35, fontt='./Resources/font.ttf')
                                 pygame.draw.rect(screen, (0, 0, 0), music_button[2])
                                 screen.blit(music_button[0], music_button[1])
@@ -111,18 +111,18 @@ while running:
     while not background_lookaround_button_clicked and running:
 
         screen.fill((0, 0, 0))
-        background_lookaround_button = get_component_button(1280, 720, "Осмотреться", step_x=500, step_y=-200,
+        background_lookaround_button = get_component_button(1280, 720, "Осмотреться", step_x=400, step_y=-200,
                                                             fontt='./Resources/font.ttf')
         pygame.draw.rect(screen, (0, 0, 0), background_lookaround_button[2])
         screen.blit(background_lookaround_button[0], background_lookaround_button[1])
 
-        font = pygame.font.SysFont(None, 40)
+        fontt = pygame.font.SysFont('./Resources/font.ttf', 40)
         multiple_text_discpl(screen, """        С недобрым утром! Голова раскалывается...
         Эх, хорошо вчера видимо погулял, ничего не помню...
         Вроде бы пообещал себе завязывать с этими делами,
         ну что такое!.. Так, стоп, что это за комната?
         Не моя... И что-то она странная какая-то, как
-        будто из 90-х... Надо бы осмотреться""", (140, 250), font)
+        будто из 90-х... Надо бы осмотреться""", (140, 250), fontt)
 
         pygame.display.flip()
 
