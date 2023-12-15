@@ -18,4 +18,15 @@ def get_component_button(screen_width, screen_height, text, color=(255, 255, 255
 
     text_rect = text_surface.get_rect(center=button_rect.center)
 
-    return (text_surface, text_rect, button_rect)
+    return (text_surface, text_rect, button_rect, button_x, button_y, button_width, button_height)
+
+
+class Button:
+    def __init__(self):
+        pass
+
+    def create(self):
+        pass
+
+    def render(self):
+        pass
