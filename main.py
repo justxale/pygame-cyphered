@@ -2,10 +2,11 @@ import pygame
 from cyphered.ui.Button import get_component_button
 from cyphered.ui.Text_displ import text_displ
 from cyphered.ui.Multiple_text_displ import multiple_text_discpl
+from cyphered.data import constants
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode(constants.SCREEN_SIZE)
 clock = pygame.time.Clock()
 running = True
 start_button_clicked = False  # переменная нажатия кнопки "играть"
