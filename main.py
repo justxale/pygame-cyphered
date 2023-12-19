@@ -3,9 +3,10 @@ from cyphered.ui import Button
 from cyphered.ui.Multiple_text_displ import multiple_text_discpl
 from cyphered.data import constants
 from cyphered.services.sound import SoundMixer
+from cyphered.services.settings import Settings
 
-with open('./gamedata/settings.txt') as f:
-    rightleft, jump, music = tuple(map(str, f.readline().split(',')))
+Settings.load_settings()
+# rightleft, jump, music = tuple(map(str, f.readline().split(',')))
 
 # pygame setup
 pygame.init()
