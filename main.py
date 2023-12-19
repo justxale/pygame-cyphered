@@ -16,14 +16,14 @@ running = True
 start_button_clicked = False  # переменная нажатия кнопки "играть"
 background_lookaround_button_clicked = False  # кнопка осмотреться в предыстории
 settings_button_clicked = False  # кнопка настроек
-flag = True  # вспомогательная переменная для плеера
+is_music_playing = False  # вспомогательная переменная для плеера
 player = SoundMixer()  # объект класса плеера
 
 while running:
 
-    if music == 'on' and flag:
-        player.play_music("resources/music/background_music.mp3")
-        flag = False
+    if not is_music_playing:
+        player.play_music("background_music")
+        is_music_playing = True
 
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -32,7 +32,7 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    screen.fill("black")
 
     # RENDER YOUR GAME HERE
     while not start_button_clicked and running:

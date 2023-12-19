@@ -1,26 +1,34 @@
 import pygame
 
+from .settings import Settings
+from ..data.paths import Path
+
 
 class SoundMixer:
     def __init__(self):
-        pygame.mixer.init()  # Инициализация mixer'а
+        pygame.mixer.init()
 
     @staticmethod
-    def play_sound(sound_file, volume=0.1):
-        sound = pygame.mixer.Sound(sound_file)  # Загрузка звукового файла
-        sound.set_volume(volume)  # Установка громкости
-        sound.play()  # Проигрывание звука
+    def play_sound(filename, volume=None):
+        path = Path.sound(filename)
+        sound = pygame.mixer.Sound(path)
+        if volume:
+            sound.set_volume(volume)
+        else:
+            sound.set_volume(Settings.sound_volume)
+        sound.play()
 
     @staticmethod
-    def play_music(music_file, repeat=True):
-        pygame.mixer.music.load(music_file)  # Загрузка музыкального файла
-        pygame.mixer.music.set_volume(0.2)
-        pygame.mixer.music.play(-1 if repeat else 0)  # Проигрывание музыки с повтором (если указано)
+    def play_music(filename, repeat=True):
+        path = Path.music(filename)
+        pygame.mixer.music.load(path)
+        pygame.mixer.music.set_volume(Settings.music_volume)
+        pygame.mixer.music.play(-1 if repeat else 0)
 
     @staticmethod
     def pause_music():
-        pygame.mixer.music.pause()  # Пауза музыки
+        pygame.mixer.music.pause()
 
     @staticmethod
     def unpause_music():
-        pygame.mixer.music.unpause()  # Возобновление проигрывания музыки
+        pygame.mixer.music.unpause()

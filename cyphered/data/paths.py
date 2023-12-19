@@ -7,6 +7,7 @@ SAVES_PATH = os.path.join(DATA_PATH, 'saves')
 FONTS_PATH = os.path.join(RESOURCES_PATH, 'fonts')
 SPRITES_PATH = os.path.join(RESOURCES_PATH, 'sprites')
 MUSIC_PATH = os.path.join(RESOURCES_PATH, 'music')
+SOUNDS_PATH = os.path.join(RESOURCES_PATH, 'sounds')
 
 
 class Path:
@@ -32,5 +33,11 @@ class Path:
     # Usage: Paths.settings()
     @classmethod
     def settings(cls) -> str:
-        """Returns a path of settings TXT file."""
-        return os.path.join(DATA_PATH, 'settings.txt')
+        """Returns a path of settings JSON file."""
+        return os.path.join(DATA_PATH, 'settings.json')
+
+    # Usage: Paths.settings()
+    @classmethod
+    def sound(cls, filename: str) -> str:
+        """Returns a path of sound MP3 file."""
+        return os.path.join(SOUNDS_PATH, f'{filename}.mp3')
