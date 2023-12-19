@@ -5,7 +5,7 @@ DATA_PATH = os.path.join(os.getcwd(), 'gamedata')
 SAVES_PATH = os.path.join(DATA_PATH, 'saves')
 
 FONTS_PATH = os.path.join(RESOURCES_PATH, 'fonts')
-SPRITES_PATH = IMAGES_PATH = os.path.join(RESOURCES_PATH, 'sprites')
+SPRITES_PATH = os.path.join(RESOURCES_PATH, 'sprites')
 MUSIC_PATH = os.path.join(RESOURCES_PATH, 'music')
 
 
@@ -22,12 +22,6 @@ class Path:
     def sprite(cls, filename: str) -> str:
         """Returns a path of SPRITE PNG file by its filename."""
         return os.path.join(SPRITES_PATH, f'{filename}.png')
-
-    # Usage: Paths.image('sprite1')
-    @classmethod
-    def image(cls, filename: str) -> str:
-        """Returns a path of SPRITE PNG file by its filename. Equals to Paths.sprite(filename)"""
-        return cls.sprite(filename)
 
     # Usage: Paths.save('save1')
     @classmethod
