@@ -5,7 +5,7 @@ class BaseScene:
     def update(self):
         pass
 
-    def process_events(self, events, pressed_keys):
+    def process_events(self, events):
         pass
 
     def render(self, screen):

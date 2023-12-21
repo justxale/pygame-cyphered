@@ -12,9 +12,10 @@ class SettingsScene(BaseScene):
             "Управление кнопками влево-вправо", step_x=300, font_size=35
         )
 
-    def process_events(self, events, pressed_keys):
-        for event in pygame.event.get():
+    def process_events(self, events):
+        for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
+                print('boo')
                 if event.button == 1:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.music_button[2].collidepoint(mouse_pos):

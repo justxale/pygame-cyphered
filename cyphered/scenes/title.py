@@ -11,13 +11,13 @@ class TitleScene(BaseScene):
         self.start_button = Button("Играть")
         self.settings_button = Button("Настройки", step_x=500, step_y=-300)
 
-    def process_events(self, events, pressed_keys):
-        for event in pygame.event.get():
+    def process_events(self, events):
+        for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.start_button[2].collidepoint(mouse_pos):
-                        self.switch_scene(...())
+                        # self.switch_scene(...())
                         break
                     if self.settings_button[2].collidepoint(mouse_pos):
                         self.switch_scene(SettingsScene())

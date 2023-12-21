@@ -26,13 +26,13 @@ def start_game(screen_size, fps, starting_scene):
     while active_scene and running:
         if not mixer.music_loaded:
             mixer.play_music("background_music")
-
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 running = False
 
         screen.fill("black")
-        active_scene.process_events(pygame.event.get(), pygame.key.get_pressed())
+        active_scene.process_events(events)
         active_scene.update()
         active_scene.render(screen)
 
