@@ -1,7 +1,6 @@
 import pygame
 
 from cyphered.scenes._base import BaseScene
-from cyphered.ui import Button
 from cyphered.ui.Multiple_text_displ import multiple_text_discpl
 from cyphered.data import constants
 from cyphered.services.sound import SoundMixer
