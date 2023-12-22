@@ -8,9 +8,17 @@ from ..ui import Button
 class TitleScene(BaseScene):
     def __init__(self):
         BaseScene.__init__(self)
-        self.start_button = Button("Играть", step_x=-450, step_y=-100)
-        self.continue_button = Button("Продолжить", step_x=-450, step_y=0)
-        self.settings_button = Button("Настройки", step_x=-450, step_y=100)
+        self.buttons = []
+
+        self.start_button = Button("Играть", step_x=-400, step_y=-50)
+        self.continue_button = Button("Продолжить", step_x=-400, step_y=50)
+        self.settings_button = Button("Настройки", step_x=-400, step_y=150)
+        self.quit_button = Button("Выйти из игры", step_x=-400, step_y=250)
+
+        self.buttons.append(self.start_button)
+        self.buttons.append(self.continue_button)
+        self.buttons.append(self.settings_button)
+        self.buttons.append(self.quit_button)
 
     def process_events(self, events):
         for event in events:
@@ -18,17 +26,22 @@ class TitleScene(BaseScene):
                 if event.button == 1:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.start_button[2].collidepoint(mouse_pos):
-                        # self.switch_scene(...())
+                        # self.switch_scene(SettingsScene())
                         break
+
+                    if self.continue_button[2].collidepoint(mouse_pos):
+                        # self.switch_scene(SettingsScene())
+                        break
+
                     if self.settings_button[2].collidepoint(mouse_pos):
                         self.switch_scene(SettingsScene())
                         break
 
+                    if self.quit_button[2].collidepoint(mouse_pos):
+                        self.destroy()
+                        break
+
     def render(self, screen):
-        screen.fill((0, 0, 0))
-        pygame.draw.rect(screen, (0, 0, 0), self.start_button[2])
-        screen.blit(self.start_button[0], self.start_button[1])
-        pygame.draw.rect(screen, (0, 0, 0), self.settings_button[2])
-        screen.blit(self.settings_button[0], self.settings_button[1])
-        pygame.draw.rect(screen, (0, 0, 0), self.continue_button[2])
-        screen.blit(self.continue_button[0], self.continue_button[1])
+        for button in self.buttons:
+            pygame.draw.rect(screen, (0, 0, 0), button[2])
+            screen.blit(button[0], button[1])
