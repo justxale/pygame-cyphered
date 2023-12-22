@@ -23,7 +23,6 @@ class SettingsScene(BaseScene):
     def process_events(self, events):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print('boo')
                 if event.button == 1:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.music_button_plus[2].collidepoint(mouse_pos):
