@@ -1,5 +1,5 @@
-from ._base import BaseObject
+from ._base import GameObject
 
 
-class Trap(BaseObject):
+class Trap(GameObject):
     ...

@@ -1,5 +1,6 @@
-from ._base import BaseObject
+from ._base import GameObject
 
 
-class Player(BaseObject):
-    ...
+class Player(GameObject):
+    def update(self, *args, **kwargs):
+        ...
