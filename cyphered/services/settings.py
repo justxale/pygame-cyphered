@@ -37,11 +37,3 @@ class Settings:
         path = Path.settings()
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(DEFAULT_SETTINGS, f)
-
-    @classmethod
-    def __setitem__(cls, key, value):
-        setattr(cls, key, value)
-
-    @classmethod
-    def __getitem__(cls, key, value):
-        return getattr(cls, key, value)
