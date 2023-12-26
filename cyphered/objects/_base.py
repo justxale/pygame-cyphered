@@ -61,9 +61,9 @@ class AnimatedGameObject(GameObject):
                 subsurface = sheet.subsurface(pygame.Rect(frame_location, self.rect.size))
                # subsurface = subsurface.convert_alpha()
                 new_size = (subsurface.get_size()[0] * mult, subsurface.get_size()[1] * mult)
-                result = pygame.Surface(new_size)
-                pygame.transform.scale(
-                    subsurface, new_size, result
+                # result = pygame.Surface(new_size)
+                result = pygame.transform.scale(
+                    subsurface, new_size
                 )
                 # result = result.convert_alpha()
                 self.frames.append(result)

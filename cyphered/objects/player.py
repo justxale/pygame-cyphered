@@ -1,4 +1,4 @@
-from ..objects import GameObject, AnimatedGameObject
+from ._base import GameObject, AnimatedGameObject
 from ..data import Path
 
 
