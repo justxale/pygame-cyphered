@@ -3,6 +3,8 @@ from ..objects import Player, Trap
 from ..data import Path
 import pygame
 
+from ..objects.enemies import Crab
+
 all_sprites = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
 player = pygame.sprite.Group()
@@ -14,6 +16,7 @@ class PlayScene(BaseScene):
         self.player = Player(
             'idle', 4, 2, all_sprites, player
         )
+        self.crab = Crab(all_sprites, enemies)
 
     def process_events(self, events):
         for event in events:

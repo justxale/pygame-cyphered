@@ -1,20 +1,8 @@
-from ._base import GameObject, AnimatedGameObject
-from ..data import Path
-
-
-class AnimationController:
-    def __init__(self):
-        self.counter = 0
-        self.count_to_switch = 25
-
-        self.state = 'idle'
-
-        self.is_facing_right = True
-        self.facing_buffer = self.is_facing_right
+from .base import AnimatedGameObject, AnimationController
 
 
 class Player(AnimatedGameObject):
-    def __init__(self, filename, columns, rows, *groups, x=1, y=1):
+    def __init__(self, filename, columns, rows, *groups, x=0, y=0):
         super().__init__(
             self.load_image(filename, 'player', transparent=True),
             columns, rows, *groups, x=x, y=y, mult=3
@@ -43,16 +31,6 @@ class Player(AnimatedGameObject):
                     self.animation.state = 'walk'
                     self.animation.count_to_switch = count_to_switch
 
-    def play_next_animation_frame(self):
-        # print('changing frame')
-        self.cur_frame = (self.cur_frame + 1) % (len(self.frames) // 2)
-        # print(self.cur_frame)
-        if self.animation.is_facing_right:
-            self.image = self.frames[self.cur_frame]
-        else:
-            self.image = self.frames[self.cur_frame + (len(self.frames) // 2)]
-        self.animation.counter = 0
-
     def update(self, *args, **kwargs):
         move_x = kwargs.get('move_x', 0)
         move_y = kwargs.get('move_y', 0)
@@ -78,14 +56,7 @@ class Player(AnimatedGameObject):
         else:
             self.switch_state('idle', 25)
 
-        if self.animation.facing_buffer != self.animation.is_facing_right:
-            self.play_next_animation_frame()
-            self.animation.facing_buffer = self.animation.is_facing_right
-
-        self.animation.counter += 1
-        if self.animation.counter >= self.animation.count_to_switch:
-            self.play_next_animation_frame()
-            self.animation.counter = 0
+        super().update()
 
     def to_save_dict(self):
         return {

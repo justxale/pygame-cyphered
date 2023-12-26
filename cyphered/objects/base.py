@@ -51,6 +51,7 @@ class AnimatedGameObject(GameObject):
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
         self.rect = self.rect.move(x, y)
+        self.animation = AnimationController()
 
     def cut_sheet(self, sheet: pygame.Surface, columns, rows, mult=1, x=0, y=0):
         self.rect = pygame.Rect(x, y, sheet.get_width() // columns, sheet.get_height() // rows)
@@ -64,6 +65,33 @@ class AnimatedGameObject(GameObject):
                 )
                 self.frames.append(result)
 
+    def play_next_animation_frame(self):
+        # print('changing frame')
+        self.cur_frame = (self.cur_frame + 1) % (len(self.frames) // 2)
+        # print(self.cur_frame)
+        if self.animation.is_facing_right:
+            self.image = self.frames[self.cur_frame]
+        else:
+            self.image = self.frames[self.cur_frame + (len(self.frames) // 2)]
+        self.animation.counter = 0
+
     def update(self):
-        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
-        self.image = self.frames[self.cur_frame]
+        if self.animation.facing_buffer != self.animation.is_facing_right:
+            self.play_next_animation_frame()
+            self.animation.facing_buffer = self.animation.is_facing_right
+
+        self.animation.counter += 1
+        if self.animation.counter >= self.animation.count_to_switch:
+            self.play_next_animation_frame()
+            self.animation.counter = 0
+
+
+class AnimationController:
+    def __init__(self):
+        self.counter = 0
+        self.count_to_switch = 25
+
+        self.state = 'idle'
+
+        self.is_facing_right = True
+        self.facing_buffer = self.is_facing_right
