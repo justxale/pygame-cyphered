@@ -3,6 +3,7 @@ import pygame
 from . import SettingsScene
 from ._base import BaseScene
 from ..ui import Button
+from .look_around import LookAround
 
 
 class TitleScene(BaseScene):
@@ -26,7 +27,7 @@ class TitleScene(BaseScene):
                 if event.button == 1:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.start_button[2].collidepoint(mouse_pos):
-                        # self.switch_scene(SettingsScene())
+                        self.switch_scene(LookAround())
                         break
 
                     if self.continue_button[2].collidepoint(mouse_pos):
