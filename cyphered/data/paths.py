@@ -14,21 +14,24 @@ class Path:
     """Class containing methods for file paths generation"""
     # Usage: Paths.music('music1')
     @classmethod
-    def music(cls, filename: str) -> str:
+    def music(cls, filename: str, *dirs) -> str:
         """Returns a path of MUSIC MP3 file by its filename."""
-        return os.path.join(MUSIC_PATH, f'{filename}.mp3')
+        return os.path.join(MUSIC_PATH, *dirs, f'{filename}.mp3')
 
     # Usage: Paths.sprite('sprite1')
     @classmethod
-    def sprite(cls, filename: str) -> str:
+    def sprite(cls, filename: str, *dirs) -> str:
         """Returns a path of SPRITE PNG file by its filename."""
-        return os.path.join(SPRITES_PATH, f'{filename}.png')
+        if dirs:
+            return os.path.join(SPRITES_PATH, *dirs, f'{filename}.png')
+        else:
+            return os.path.join(SPRITES_PATH, f'{filename}.png')
 
     # Usage: Paths.save('save1')
     @classmethod
-    def save(cls, filename: str) -> str:
-        """Returns a path of SAVE TXT file by its filename."""
-        return os.path.join(SAVES_PATH, f'{filename}.json')
+    def save(cls, filename: str, *dirs) -> str:
+        """Returns a path of SAVE JSON file by its filename."""
+        return os.path.join(SAVES_PATH, *dirs, f'{filename}.json')
 
     # Usage: Paths.settings()
     @classmethod
@@ -38,6 +41,6 @@ class Path:
 
     # Usage: Paths.settings()
     @classmethod
-    def sound(cls, filename: str) -> str:
+    def sound(cls, filename: str, *dirs) -> str:
         """Returns a path of sound MP3 file."""
-        return os.path.join(SOUNDS_PATH, f'{filename}.mp3')
+        return os.path.join(SOUNDS_PATH, *dirs, f'{filename}.mp3')
