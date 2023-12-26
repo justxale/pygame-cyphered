@@ -50,22 +50,18 @@ class AnimatedGameObject(GameObject):
         self.cut_sheet(sheet, columns, rows, mult=mult)
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
-        print(x, y)
         self.rect = self.rect.move(x, y)
 
-    def cut_sheet(self, sheet: pygame.Surface, columns, rows, mult=1):
-        self.rect = pygame.Rect(0, 0, sheet.get_width() // columns, sheet.get_height() // rows)
+    def cut_sheet(self, sheet: pygame.Surface, columns, rows, mult=1, x=0, y=0):
+        self.rect = pygame.Rect(x, y, sheet.get_width() // columns, sheet.get_height() // rows)
         for j in range(rows):
             for i in range(columns):
                 frame_location = (self.rect.w * i, self.rect.h * j)
                 subsurface = sheet.subsurface(pygame.Rect(frame_location, self.rect.size))
-               # subsurface = subsurface.convert_alpha()
                 new_size = (subsurface.get_size()[0] * mult, subsurface.get_size()[1] * mult)
-                # result = pygame.Surface(new_size)
                 result = pygame.transform.scale(
                     subsurface, new_size
                 )
-                # result = result.convert_alpha()
                 self.frames.append(result)
 
     def update(self):

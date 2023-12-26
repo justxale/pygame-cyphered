@@ -20,9 +20,9 @@ class PlayScene(BaseScene):
             if event.type == pygame.KEYDOWN:
                 match event.key:
                     case pygame.K_LEFT | pygame.K_a:
-                        player.update('keydown', move_x=-5)
+                        player.update('keydown', move_x=-2)
                     case pygame.K_RIGHT | pygame.K_d:
-                        player.update('keydown', move_x=5)
+                        player.update('keydown', move_x=2)
                     case pygame.K_UP:
                         player.update()
             elif event.type == pygame.KEYUP:
