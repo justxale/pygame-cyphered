@@ -5,10 +5,11 @@ from ..data.paths import Path
 
 
 class SoundMixer:
-    def __init__(self):
+    music_playing = False
+    music_loaded = False
+
+    def __new__(cls, *args, **kwargs):
         pygame.mixer.init()
-        self.music_playing = False
-        self.music_loaded = False
 
     @staticmethod
     def play_sound(filename, volume=None):
@@ -20,24 +21,28 @@ class SoundMixer:
             sound.set_volume(Settings.sound_volume)
         sound.play()
 
-    def play_music(self, filename, repeat=True):
+    @classmethod
+    def play_music(cls, filename, repeat=True):
         path = Path.music(filename)
         pygame.mixer.music.load(path)
         pygame.mixer.music.set_volume(Settings.music_volume)
         pygame.mixer.music.play(-1 if repeat else 0)
-        self.music_playing = True
-        self.music_loaded = True
+        cls.music_playing = True
+        cls.music_loaded = True
 
-    def pause_music(self):
+    @classmethod
+    def pause_music(cls):
         pygame.mixer.music.pause()
-        self.music_playing = False
+        cls.music_playing = False
 
-    def unpause_music(self):
+    @classmethod
+    def unpause_music(cls):
         pygame.mixer.music.unpause()
-        self.music_playing = True
+        cls.music_playing = True
 
-    def stop_music(self):
+    @classmethod
+    def stop_music(cls):
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()
-        self.music_playing = False
-        self.music_loaded = False
+        cls.music_playing = False
+        cls.music_loaded = False

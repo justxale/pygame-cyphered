@@ -14,17 +14,13 @@ def start_game(screen_size, fps, starting_scene):
 
     screen = pygame.display.set_mode(screen_size)
     clock = pygame.time.Clock()
-    start_button_clicked = False  # переменная нажатия кнопки "играть"
-    background_lookaround_button_clicked = False  # кнопка осмотреться в предыстории
-    settings_button_clicked = False  # кнопка настроек
-    mixer = SoundMixer()  # объект класса плеера
+    pygame.display.set_caption('Cyphered')
+    SoundMixer()  # объект класса плеера
     running = True
 
     active_scene: BaseScene = starting_scene
 
     while active_scene and running:
-        if not mixer.music_loaded:
-            mixer.play_music("background_music")
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:

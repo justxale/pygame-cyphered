@@ -3,6 +3,7 @@ import pygame
 from . import SettingsScene
 from ._base import BaseScene
 from ..ui import Button
+from ..services.sound import SoundMixer
 
 
 class TitleScene(BaseScene):
@@ -19,6 +20,9 @@ class TitleScene(BaseScene):
         self.buttons.append(self.continue_button)
         self.buttons.append(self.settings_button)
         self.buttons.append(self.quit_button)
+
+        if not SoundMixer.music_loaded:
+            SoundMixer.play_music("redwood_colonnade")
 
     def process_events(self, events):
         for event in events:
