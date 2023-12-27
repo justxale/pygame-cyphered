@@ -17,7 +17,7 @@ class Player(AnimatedGameObject):
         if self.animation.state != state:
             self.cur_frame = 0
             self.frames = []
-            print(f'switching state to {state}')
+            print(f'switching animation state to {state}')
             match state:
                 case 'idle':
                     sheet = self.load_image('idle', 'player', transparent=True)

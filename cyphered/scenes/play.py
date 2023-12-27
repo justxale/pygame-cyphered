@@ -1,4 +1,4 @@
-from ._base import BaseScene
+from .base import BaseScene
 from ..objects import Player, Trap
 from ..data import Path
 import pygame

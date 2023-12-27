@@ -1,6 +1,6 @@
 import pygame
 
-from ._base import BaseScene
+from .base import BaseScene
 from ..ui import Button
 from cyphered.ui.Multiple_text_displ import multiple_text_discpl
 

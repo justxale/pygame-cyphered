@@ -1,6 +1,6 @@
 import pygame
 
-from cyphered.scenes._base import BaseScene
+from cyphered.scenes.base import BaseScene
 from cyphered.ui.Multiple_text_displ import multiple_text_discpl
 from cyphered.data import constants
 from cyphered.services.sound import SoundMixer
@@ -28,8 +28,7 @@ def start_game(screen_size, fps, starting_scene):
 
         screen.fill("black")
         active_scene.process_events(events)
-        active_scene.update()
-        active_scene.render(screen)
+        active_scene.update(screen)
 
         active_scene = active_scene.next
 
