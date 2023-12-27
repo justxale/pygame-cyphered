@@ -1,4 +1,5 @@
 from .base import BaseScene
+from .subscenes.pause import PauseSubscene
 from ..objects import Player, Trap
 from ..data import Path
 import pygame
@@ -17,17 +18,28 @@ class PlayScene(BaseScene):
             'idle', 4, 2, all_sprites, player
         )
         self.crab = Crab(all_sprites, enemies)
+        self.is_paused = False
 
     def process_events(self, events):
+        super().process_events(events)
         for event in events:
             if event.type == pygame.KEYDOWN:
                 match event.key:
                     case pygame.K_LEFT | pygame.K_a:
-                        player.update('keydown', move_x=-2)
+                        if not self.is_paused:
+                            player.update('keydown', move_x=-2)
                     case pygame.K_RIGHT | pygame.K_d:
-                        player.update('keydown', move_x=2)
+                        if not self.is_paused:
+                            player.update('keydown', move_x=2)
                     case pygame.K_UP:
                         player.update()
+                    case pygame.K_ESCAPE:
+                        if not self.is_paused:
+                            self.open_subscene(PauseSubscene(self))
+                            self.is_paused = True
+                        elif self.subscene:
+                            self.subscene.destroy()
+                            self.is_paused = False
             elif event.type == pygame.KEYUP:
                 match event.key:
                     case pygame.K_LEFT | pygame.K_a:
