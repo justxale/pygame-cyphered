@@ -20,11 +20,15 @@ class BaseSubscene:
     def switch_scene(self, scene, destroy=False):
         if destroy:
             self.destroy()
-        self.parent_scene.next = scene
+        self.parent_scene.switch_scene(scene)
 
     def destroy(self):
+        self.on_destroy()
         self.need_to_render = False
         self.parent_scene.subscene = None
+
+    def on_destroy(self):
+        pass
 
 
 class BaseScene:
@@ -45,10 +49,15 @@ class BaseScene:
         pass
 
     def switch_scene(self, scene_to_switch):
+        self.on_destroy()
         self.next = scene_to_switch
 
     def open_subscene(self, subscene: BaseSubscene):
         self.subscene = subscene
 
     def destroy(self):
+        self.on_destroy()
         self.switch_scene(None)
+
+    def on_destroy(self):
+        pass
