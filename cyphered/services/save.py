@@ -1,7 +1,6 @@
 import json
 
 from ..data import Path
-# from ..objects.base import GameObject
 
 
 class Savefile:
@@ -10,7 +9,6 @@ class Savefile:
 
 
 class Saver:
-    #listened_objects: list[GameObject] = []
     listened_objects: list = []
 
     @classmethod
@@ -33,7 +31,6 @@ class Saver:
             pass
 
     @classmethod
-    #def add(cls, gameobject: GameObject):
     def add(cls, gameobject):
         cls.listened_objects.append(gameobject)
         gameobject.is_listened = True

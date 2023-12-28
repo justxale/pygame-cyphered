@@ -9,7 +9,7 @@ class FPS:
 
     # Отображение фпс
     def render(self, display):
-        self.text = self.font.render(str(round(self.clock.get_fps(), 2)), True, (255, 255, 255))
+        self.text = self.font.render(str(self.get_fps()), True, (255, 255, 255))
         display.blit(self.text, (0, 0))
 
     # Получение фпс
