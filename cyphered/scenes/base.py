@@ -93,7 +93,8 @@ class BaseScene:
     def switch_scene(self, scene_to_switch, subscene=None):
         self.on_destroy()
         self.next = scene_to_switch
-        self.next.subscene = subscene
+        if scene_to_switch is not None:
+            self.next.subscene = subscene
 
     def open_subscene(self, subscene: BaseSubscene, pause=False):
         if pause:
