@@ -8,14 +8,11 @@ from ...data.constants import SCREEN_SIZE
 class PauseSubscene(BaseSubscene):
     def __init__(self, parent):
         super().__init__(parent)
-        self.continue_button = Button(
-            'Продолжить', step_y=-100
-        )
-        self.save_and_exit_button = Button(
-            'Сохранить и выйти', step_y=100
-        )
+        self.continue_button = Button('Продолжить', step_y=-200)
+        self.settings_button = Button('Настройки', step_y=0)
+        self.save_and_exit_button = Button('Сохранить и выйти', step_y=200)
 
-        self.buttons = [self.save_and_exit_button, self.continue_button]
+        self.buttons = [self.save_and_exit_button, self.settings_button, self.continue_button]
 
     def process_events(self, events):
         for event in events:
@@ -27,8 +24,13 @@ class PauseSubscene(BaseSubscene):
                         self.destroy()
                         break
 
+                    if self.settings_button[2].collidepoint(mouse_pos):
+                        from .settings import SettingsSubscene
+                        self.switch_subscene(SettingsSubscene(self.parent_scene))
+
                     if self.save_and_exit_button[2].collidepoint(mouse_pos):
-                        ...
+                        from ..title import TitleScene
+                        self.switch_scene(TitleScene(), destroy=True)
                         break
 
     def render(self, screen: pygame.Surface):

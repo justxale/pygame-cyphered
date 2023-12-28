@@ -14,6 +14,14 @@ class BaseSubscene:
         if not self.need_to_render:
             return
 
+    def switch_subscene(self, subscene):
+        self.parent_scene.subscene = subscene
+
+    def switch_scene(self, scene, destroy=False):
+        if destroy:
+            self.destroy()
+        self.parent_scene.next = scene
+
     def destroy(self):
         self.need_to_render = False
         self.parent_scene.subscene = None
