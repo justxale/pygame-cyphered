@@ -1,4 +1,5 @@
 from .base import AnimatedGameObject, AnimationController
+from ..services.save import Saver
 
 
 class Player(AnimatedGameObject):
@@ -10,6 +11,7 @@ class Player(AnimatedGameObject):
         self.rect.x = 200
         self.rect.y = 200
         self.animation = AnimationController()
+        Saver.add(self)
 
         self.key_state = [False, False, 0]
 

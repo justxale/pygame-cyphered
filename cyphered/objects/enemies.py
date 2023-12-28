@@ -1,9 +1,11 @@
 from .base import GameObject, AnimatedGameObject, AnimationController
+from ..services.save import Saver
 
 
 class Trap(GameObject):
     def __init__(self, *groups):
         super().__init__(*groups)
+        Saver.add(self)
 
     def to_save_dict(self):
         return {
@@ -23,6 +25,7 @@ class Crab(AnimatedGameObject):
         self.rect.y = 200
 
         self.move_state = [True, 0]
+        Saver.add(self)
 
     def update(self):
         # print(self.move_state, self.animation.is_facing_right)
@@ -38,3 +41,10 @@ class Crab(AnimatedGameObject):
             self.animation.is_facing_right = not self.animation.is_facing_right
 
         super().update()
+
+    def to_save_dict(self):
+        return {
+            'oid': 'crab',
+            'x': self.rect.x,
+            'y': self.rect.y
+        }

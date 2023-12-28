@@ -4,6 +4,7 @@ from ..objects import Player
 import pygame
 
 from ..objects.enemies import Crab
+from ..services.save import Saver
 
 all_sprites = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
@@ -57,3 +58,6 @@ class PlayScene(BaseScene):
         all_sprites.draw(screen)
         if not self.is_paused:
             all_sprites.update()
+
+    def on_destroy(self):
+        Saver.listened_objects.clear()

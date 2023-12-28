@@ -1,6 +1,7 @@
 import pygame
 
 from ..base import BaseSubscene
+from ...services.save import Saver
 from ...ui import Button
 from ...data.constants import SCREEN_SIZE
 
@@ -30,6 +31,7 @@ class PauseSubscene(BaseSubscene):
 
                     if self.save_and_exit_button[2].collidepoint(mouse_pos):
                         from ..title import TitleScene
+                        Saver.save_all()
                         self.switch_scene(TitleScene(), destroy=True)
                         break
 
