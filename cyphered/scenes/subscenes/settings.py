@@ -48,16 +48,20 @@ class SettingsSubscene(BaseSubscene):
                         if Settings.jump_key == "w":
                             Settings.jump_key = 'space'
                             self.jump_button = Button("пробел", font_size=25, step_x=-160)
+                            self.buttons[0] = self.jump_button
                         else:
                             Settings.jump_key = 'w'
                             self.jump_button = Button("w", font_size=25, step_x=-160)
+                            self.buttons[0] = self.jump_button
                     if self.rightleft_button[2].collidepoint(mouse_pos):
                         if Settings.move_keys == "arrows":
                             Settings.move_keys = "ad"
                             self.rightleft_button = Button("ad", step_x=300, font_size=25)
+                            self.buttons[1] = self.rightleft_button
                         else:
                             Settings.move_keys = "arrows"
                             self.rightleft_button = Button("стрелки", step_x=300, font_size=25)
+                            self.buttons[1] = self.rightleft_button
                     Settings.save_settings()
                     if self.back[2].collidepoint(mouse_pos):
                         from .pause import PauseSubscene
