@@ -31,10 +31,10 @@ class PlayScene(BaseScene):
                 match event.key:
                     case pygame.K_LEFT | pygame.K_a:
                         if not self.is_paused:
-                            player.update('keydown', move_x=-2)
+                            player.update('keydown', move_x=2, k='left')
                     case pygame.K_RIGHT | pygame.K_d:
                         if not self.is_paused:
-                            player.update('keydown', move_x=2)
+                            player.update('keydown', move_x=2, k='right')
                     case pygame.K_UP:
                         player.update()
                     case pygame.K_ESCAPE:
@@ -47,9 +47,9 @@ class PlayScene(BaseScene):
             elif event.type == pygame.KEYUP:
                 match event.key:
                     case pygame.K_LEFT | pygame.K_a:
-                        player.update('keyup')
+                        player.update('keyup', k='left')
                     case pygame.K_RIGHT | pygame.K_d:
-                        player.update('keyup')
+                        player.update('keyup', k='right')
                     case pygame.K_UP:
                         player.update()
 

@@ -11,7 +11,7 @@ class Player(AnimatedGameObject):
         self.rect.y = 200
         self.animation = AnimationController()
 
-        self.key_state = (False, 0, 0)
+        self.key_state = [False, False, 0]
 
     def switch_state(self, state, count_to_switch):
         if self.animation.state != state:
@@ -35,24 +35,30 @@ class Player(AnimatedGameObject):
         move_x = kwargs.get('move_x', 0)
         move_y = kwargs.get('move_y', 0)
         if 'keydown' in args:
-            self.key_state = (True, move_x, move_y)
+            if kwargs.get('k') == 'left':
+                self.key_state[0] = True
+            if kwargs.get('k') == 'right':
+                self.key_state[1] = True
+            self.key_state[2] = move_x
         elif 'keyup' in args:
-            self.key_state = (False, 0, 0)
+            if kwargs.get('k') == 'left':
+                self.key_state[0] = False
+            if kwargs.get('k') == 'right':
+                self.key_state[1] = False
+
+        # print(self.key_state)
 
         if self.key_state[0]:
+            self.rect = self.rect.move(-self.key_state[2], 0)
+            self.animation.is_facing_right = False
+        if self.key_state[1]:
+            self.rect = self.rect.move(self.key_state[2], 0)
+            self.animation.is_facing_right = True
+
+        if self.key_state[0] and self.key_state[1]:
+            self.switch_state('idle', 25)
+        elif self.key_state[0] or self.key_state[1]:
             self.switch_state('walk', 10)
-            if self.key_state[1]:
-                self.rect = self.rect.move(
-                    self.key_state[1], 0
-                )
-                if self.key_state[1] > 0:
-                    self.animation.is_facing_right = True
-                else:
-                    self.animation.is_facing_right = False
-            elif self.key_state[2]:
-                self.rect = self.rect.move(
-                    0, move_y
-                )
         else:
             self.switch_state('idle', 25)
 
