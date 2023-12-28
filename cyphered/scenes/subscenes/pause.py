@@ -32,7 +32,7 @@ class PauseSubscene(BaseSubscene):
                     if self.save_and_exit_button[2].collidepoint(mouse_pos):
                         from ..title import TitleScene
                         Saver.save_all()
-                        self.switch_scene(TitleScene(), destroy=True)
+                        self.switch_scene(TitleScene(), True)
                         break
 
     def render(self, screen: pygame.Surface):

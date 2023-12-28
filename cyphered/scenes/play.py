@@ -23,7 +23,6 @@ class PlayScene(BaseScene):
         )
 
         self.crab = Crab(all_sprites, enemies)
-        self.is_paused = False
 
     def process_events(self, events):
         super().process_events(events)

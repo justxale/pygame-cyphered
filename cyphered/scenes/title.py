@@ -28,7 +28,7 @@ class TitleScene(BaseScene):
                     mouse_pos = pygame.mouse.get_pos()
                     if self.start_button[2].collidepoint(mouse_pos):
                         # self.switch_scene(LookAround())
-                        self.switch_scene(PlayScene())
+                        self.fade_and_switch_scene(PlayScene())
                         break
 
                     if self.continue_button[2].collidepoint(mouse_pos):
