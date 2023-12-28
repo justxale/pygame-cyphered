@@ -2,6 +2,7 @@ import pygame
 
 from ..base import BaseSubscene
 from ...ui import Button
+from ...data.constants import SCREEN_SIZE
 
 
 class PauseSubscene(BaseSubscene):
@@ -30,8 +31,12 @@ class PauseSubscene(BaseSubscene):
                         ...
                         break
 
-    def render(self, screen):
+    def render(self, screen: pygame.Surface):
         super().render(screen)
+        s = pygame.Surface(SCREEN_SIZE)
+        s.set_alpha(128)
+        s.fill((0, 0, 0))
+        screen.blit(s, (0, 0))
         for button in self.buttons:
-            pygame.draw.rect(screen, (0, 0, 0), button[2])
+            # pygame.draw.rect(screen, (0, 0, 0), button[2])
             screen.blit(button[0], button[1])
