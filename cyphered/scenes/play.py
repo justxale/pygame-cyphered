@@ -1,7 +1,6 @@
 from .base import BaseScene
 from .subscenes.pause import PauseSubscene
-from ..objects import Player, Trap
-from ..data import Path
+from ..objects import Player
 import pygame
 
 from ..objects.enemies import Crab
@@ -14,9 +13,14 @@ player = pygame.sprite.Group()
 class PlayScene(BaseScene):
     def __init__(self):
         BaseScene.__init__(self)
+        all_sprites.empty()
+        enemies.empty()
+        player.empty()
+
         self.player = Player(
             'idle', 4, 2, all_sprites, player
         )
+
         self.crab = Crab(all_sprites, enemies)
         self.is_paused = False
 
@@ -51,5 +55,5 @@ class PlayScene(BaseScene):
 
     def render(self, screen):
         all_sprites.draw(screen)
-        all_sprites.update()
-
+        if not self.is_paused:
+            all_sprites.update()
