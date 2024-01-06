@@ -32,14 +32,6 @@ def start_game(screen_size, fps, starting_scene):
         active_scene.update(screen)
 
         active_scene = active_scene.next
-#
-        #    fontt = pygame.font.SysFont('./Resources/font.ttf', 40)
-        #    multiple_text_discpl(screen, """        С недобрым утром! Голова раскалывается...
-        #    Эх, хорошо вчера видимо погулял, ничего не помню...
-        #    Вроде бы пообещал себе завязывать с этими делами,
-        #    ну что такое!.. Так, стоп, что это за комната?
-        #    Не моя... И что-то она странная какая-то, как
-        #    будто из 90-х... Надо бы осмотреться""", (140, 250), fontt)
 
         fps_display.render(screen)
         pygame.display.flip()

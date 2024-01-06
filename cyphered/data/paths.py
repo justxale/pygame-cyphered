@@ -7,6 +7,7 @@ SAVES_PATH = os.path.join(DATA_PATH, 'saves')
 FONTS_PATH = os.path.join(RESOURCES_PATH, 'fonts')
 SPRITES_PATH = os.path.join(RESOURCES_PATH, 'sprites')
 MUSIC_PATH = os.path.join(RESOURCES_PATH, 'music')
+JSONDATA_PATH = os.path.join(RESOURCES_PATH, 'data')
 SOUNDS_PATH = os.path.join(RESOURCES_PATH, 'sounds')
 
 
@@ -16,7 +17,11 @@ class Path:
     @classmethod
     def music(cls, filename: str, *dirs) -> str:
         """Returns a path of MUSIC MP3 file by its filename."""
-        return os.path.join(MUSIC_PATH, *dirs, f'{filename}.mp3')
+        if dirs:
+            return os.path.join(MUSIC_PATH, *dirs, f'{filename}.mp3')
+        else:
+            return os.path.join(MUSIC_PATH, f'{filename}.mp3')
+
 
     # Usage: Paths.sprite('sprite1')
     @classmethod
@@ -44,3 +49,12 @@ class Path:
     def sound(cls, filename: str, *dirs) -> str:
         """Returns a path of sound MP3 file."""
         return os.path.join(SOUNDS_PATH, *dirs, f'{filename}.mp3')
+
+    @classmethod
+    def data(cls, filename: str, *dirs, ext: str = 'json') -> str:
+        """Returns a path of DATA JSON file by its filename."""
+        if dirs:
+            return os.path.join(JSONDATA_PATH, *dirs, f'{filename}.{ext}')
+        else:
+            return os.path.join(JSONDATA_PATH, f'{filename}.{ext}')
+

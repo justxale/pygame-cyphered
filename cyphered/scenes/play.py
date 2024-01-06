@@ -1,14 +1,17 @@
 from .base import BaseScene
 from .subscenes.pause import PauseSubscene
+from ..data import Path, constants
 from ..objects import Player
 import pygame
 
 from ..objects.enemies import Crab
+from ..objects.tiles import Tile, Tileset
 from ..services.save import Saver
 
 all_sprites = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
 player = pygame.sprite.Group()
+tiles = pygame.sprite.Group()
 
 
 class PlayScene(BaseScene):
@@ -17,12 +20,29 @@ class PlayScene(BaseScene):
         all_sprites.empty()
         enemies.empty()
         player.empty()
+        tiles.empty()
+
+        self.tileset = Tileset('tiles', 10, 15, mult=4)
+        self.generate_level('level1')
 
         self.player = Player(
             'idle', 4, 2, all_sprites, player
         )
 
         self.crab = Crab(all_sprites, enemies)
+
+    def generate_level(self, level_name: str):
+        level_data = Path.data(level_name, ext='txt')
+        with open(level_data, 'r', encoding='utf-8') as f:
+            level_data = f.readlines()
+        for y, line in enumerate(level_data):
+            for x, tile in enumerate(line.split('; ')):
+                i, j = map(int, tile.split(','))
+                Tile(
+                    self.tileset, (i, j),
+                    (x + constants.LEVEL_OFFSET[0], y + constants.LEVEL_OFFSET[1]),
+                    all_sprites, tiles
+                )
 
     def process_events(self, events):
         super().process_events(events)
@@ -54,6 +74,7 @@ class PlayScene(BaseScene):
                         player.update()
 
     def render(self, screen):
+        screen.fill(constants.BG_COLOR)
         all_sprites.draw(screen)
         if not self.is_paused:
             all_sprites.update()

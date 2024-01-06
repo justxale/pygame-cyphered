@@ -7,3 +7,7 @@ DEFAULT_SETTINGS = {
     "jump_key": "space",
     "move_keys": "arrows"
 }
+
+TILE_SIZE = 8
+LEVEL_OFFSET = (0, 15)
+BG_COLOR = '#0e071b'
