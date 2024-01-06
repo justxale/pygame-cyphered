@@ -7,6 +7,7 @@ import pygame
 from ..objects.enemies import Crab
 from ..objects.tiles import Tile, Tileset
 from ..services.save import Saver
+from ..services.sound import SoundMixer
 
 all_sprites = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
@@ -60,9 +61,11 @@ class PlayScene(BaseScene):
                     case pygame.K_ESCAPE:
                         if not self.is_paused:
                             self.open_subscene(PauseSubscene(self))
+                            SoundMixer.pause_music()
                             self.is_paused = True
                         elif self.subscene:
                             self.subscene.destroy()
+                            SoundMixer.unpause_music()
                             self.is_paused = False
             elif event.type == pygame.KEYUP:
                 match event.key:

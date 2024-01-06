@@ -8,6 +8,8 @@ DEFAULT_SETTINGS = {
     "move_keys": "arrows"
 }
 
+MUSIC_FADE_TIME = 1000
+
 TILE_SIZE = 8
 LEVEL_OFFSET = (0, 15)
 BG_COLOR = '#0e071b'

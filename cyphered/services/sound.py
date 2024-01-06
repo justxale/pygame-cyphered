@@ -1,6 +1,7 @@
 import pygame
 
 from .settings import Settings
+from ..data import constants
 from ..data.paths import Path
 
 
@@ -26,7 +27,7 @@ class SoundMixer:
         path = Path.music(filename)
         pygame.mixer.music.load(path)
         pygame.mixer.music.set_volume(Settings.music_volume)
-        pygame.mixer.music.play(-1 if repeat else 0)
+        pygame.mixer.music.play(-1 if repeat else 0, )
         cls.music_playing = True
         cls.music_loaded = True
 
@@ -46,3 +47,15 @@ class SoundMixer:
         pygame.mixer.music.unload()
         cls.music_playing = False
         cls.music_loaded = False
+
+    @classmethod
+    def switch_music(cls, filename: str, fade=True, repeat=True):
+        if cls.music_loaded and fade:
+            pygame.mixer.music.fadeout(constants.MUSIC_FADE_TIME)
+            pygame.mixer.music.unload()
+        path = Path.music(filename)
+        pygame.mixer.music.load(path)
+        pygame.mixer.music.set_volume(Settings.music_volume)
+        pygame.mixer.music.play(-1 if repeat else 0, fade_ms=constants.MUSIC_FADE_TIME if fade else 0)
+        cls.music_playing = True
+        cls.music_loaded = True

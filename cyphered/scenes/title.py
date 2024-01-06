@@ -29,6 +29,7 @@ class TitleScene(BaseScene):
                     if self.start_button[2].collidepoint(mouse_pos):
                         # self.switch_scene(LookAround())
                         self.fade_and_switch_scene(PlayScene())
+                        SoundMixer.switch_music('background_music')
                         break
 
                     if self.continue_button[2].collidepoint(mouse_pos):

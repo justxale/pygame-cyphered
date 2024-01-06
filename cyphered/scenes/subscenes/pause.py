@@ -2,6 +2,7 @@ import pygame
 
 from ..base import BaseSubscene
 from ...services.save import Saver
+from ...services.sound import SoundMixer
 from ...ui import Button
 from ...data.constants import SCREEN_SIZE
 
@@ -33,6 +34,7 @@ class PauseSubscene(BaseSubscene):
                         from ..title import TitleScene
                         Saver.save_all()
                         self.switch_scene(TitleScene(), True)
+                        SoundMixer.switch_music('redwood_colonnade')
                         break
 
     def render(self, screen: pygame.Surface):
