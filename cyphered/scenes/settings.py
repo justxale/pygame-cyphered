@@ -64,16 +64,12 @@ class SettingsScene(BaseScene):
         screen.blit(self.music_button_plus[0], self.music_button_plus[1])
         pygame.draw.rect(screen, (0, 0, 0), self.music_button_minus[2])
         screen.blit(self.music_button_minus[0], self.music_button_minus[1])
-        text_displ("Громкость музыки", screen, step_x=-390, step_y=-80, font_size=25,
-                   font1="./resources/fonts/font.ttf")
+        text_displ("Громкость музыки", screen, step_x=-390, step_y=-80, font_size=25)
 
-        text_displ(str(int(Settings.music_volume * 10)), screen, step_x=-405, step_y=-30, font_size=25,
-                   font1="./resources/fonts/font.ttf")
+        text_displ(str(int(Settings.music_volume * 10)), screen, step_x=-405, step_y=-30, font_size=25)
 
-        text_displ("Прыжок", screen, step_x=-160, step_y=-80, font_size=25,
-                   font1="./resources/fonts/font.ttf")
-        text_displ("Управление кнопками движения вправо-влево", screen, step_x=250, step_y=-80, font_size=25,
-                   font1="./resources/fonts/font.ttf")
+        text_displ("Прыжок", screen, step_x=-160, step_y=-80, font_size=25)
+        text_displ("Управление кнопками движения вправо-влево", screen, step_x=250, step_y=-80, font_size=25)
         pygame.draw.rect(screen, (0, 0, 0), self.jump_button[2])
         screen.blit(self.jump_button[0], self.jump_button[1])
 

@@ -55,7 +55,7 @@ class LookAround(BaseScene):
            Вроде бы пообещал себе завязывать с этими делами,
            ну что такое!.. Так, стоп, что это за комната?
            Не моя... И что-то она странная какая-то, как
-           будто из 90-х... Надо бы осмотреться""", (140, 250), fontt='./resources/fonts/font.ttf', font_size=40)
+           будто из 90-х... Надо бы осмотреться""", (140, 250), font_size=40)
 
         # pygame.draw.rect(screen, (0, 0, 0), self.rightleft_button[2])
         # screen.blit(self.rightleft_button[0], self.rightleft_button[1])
