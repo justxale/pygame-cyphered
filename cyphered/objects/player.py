@@ -1,16 +1,20 @@
+import pygame
+
 from .base import AnimatedGameObject, AnimationController
 from ..services.save import Saver
 
 
 class Player(AnimatedGameObject):
-    def __init__(self, filename, columns, rows, *groups, x=0, y=0):
+    def __init__(self, filename, columns, rows, play_scene,  *groups, x=0, y=0):
         super().__init__(
             self.load_image(filename, 'player', transparent=True),
             columns, rows, *groups, x=x, y=y, mult=3
         )
-        self.rect.x = 200
-        self.rect.y = 200
+        self.rect.x = x
+        self.rect.y = y
+        self.mask = pygame.mask.from_surface(self.image)
         self.animation = AnimationController()
+        self.scene = play_scene
         Saver.add(self)
 
         self.key_state = [False, False, 0]
@@ -48,14 +52,19 @@ class Player(AnimatedGameObject):
             if kwargs.get('k') == 'right':
                 self.key_state[1] = False
 
-        # print(self.key_state)
+        is_colliding_walls = (self.rect.collidelist(self.scene.wall_rects['left']) != -1 or
+                              self.rect.collidelist(self.scene.wall_rects['right']) != -1)
+        is_colliding_floor = self.rect.collidelist(self.scene.floor_rects) != -1
 
-        if self.key_state[0]:
+        if self.key_state[0] and self.rect.collidelist(self.scene.wall_rects['left']) == -1:
             self.rect = self.rect.move(-self.key_state[2], 0)
             self.animation.is_facing_right = False
-        if self.key_state[1]:
+        if self.key_state[1] and self.rect.collidelist(self.scene.wall_rects['right']) == -1:
             self.rect = self.rect.move(self.key_state[2], 0)
             self.animation.is_facing_right = True
+
+        if not is_colliding_floor:
+            self.rect = self.rect.move(0, 2)
 
         if self.key_state[0] and self.key_state[1]:
             self.switch_state('idle', 25)

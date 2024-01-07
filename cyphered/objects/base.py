@@ -54,6 +54,7 @@ class AnimatedGameObject(GameObject):
         self.animation = AnimationController()
 
     def cut_sheet(self, sheet: pygame.Surface, columns, rows, mult=1, x=0, y=0):
+        print(sheet.get_width() // columns, sheet.get_height() // rows)
         self.rect = pygame.Rect(x, y, sheet.get_width() // columns, sheet.get_height() // rows)
         for j in range(rows):
             for i in range(columns):
@@ -64,6 +65,7 @@ class AnimatedGameObject(GameObject):
                     subsurface, new_size
                 )
                 self.frames.append(result)
+        self.rect = pygame.Rect(x, y, self.frames[0].get_rect().w, self.frames[0].get_rect().h)
 
     def play_next_animation_frame(self):
         # print('changing frame')

@@ -65,7 +65,14 @@ class TransitionSubscene(BaseSubscene):
             self.finished = False
             self.fadein = False
         if self.progress <= 0.0 and not self.fadein:
+            print('TransitionSubscene destroyed')
             self.destroy()
+
+    def destroy(self):
+        self.on_destroy()
+        self.need_to_render = False
+        self.parent_scene.subscene = None
+        self.next_scene.subscene = None
 
 
 class BaseScene:
