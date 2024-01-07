@@ -22,13 +22,13 @@ class Player(AnimatedGameObject):
             print(f'switching animation state to {state}')
             match state:
                 case 'idle':
-                    sheet = self.load_image('idle', 'player', transparent=True)
+                    sheet = self.load_image('new_idle', 'player', transparent=True)
                     self.cut_sheet(sheet, 4, 2, mult=3, x=self.rect.x, y=self.rect.y)
                     self.animation.state = 'idle'
                     self.animation.count_to_switch = count_to_switch
 
                 case 'walk':
-                    sheet = self.load_image('walk', 'player', transparent=True)
+                    sheet = self.load_image('new_walk', 'player', transparent=True)
                     self.cut_sheet(sheet, 8, 2, mult=3, x=self.rect.x, y=self.rect.y)
                     self.animation.state = 'walk'
                     self.animation.count_to_switch = count_to_switch
