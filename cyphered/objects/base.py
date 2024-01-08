@@ -6,6 +6,7 @@ class GameObject(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
         self.is_listened = False
+        self.rect = pygame.Rect(0, 0, 1, 1)
 
     def _load_image(self, filename, colorkey=None):
         path = filename
@@ -54,7 +55,6 @@ class AnimatedGameObject(GameObject):
         self.animation = AnimationController()
 
     def cut_sheet(self, sheet: pygame.Surface, columns, rows, mult=1, x=0, y=0):
-        print(sheet.get_width() // columns, sheet.get_height() // rows)
         self.rect = pygame.Rect(x, y, sheet.get_width() // columns, sheet.get_height() // rows)
         for j in range(rows):
             for i in range(columns):

@@ -1,11 +1,12 @@
+import pygame
+
 from .base import BaseScene
 from .subscenes.pause import PauseSubscene
 from ..data import Path, constants, dev
 from ..objects import Player
-import pygame
-
+from ..objects.base import GameObject
 from ..objects.enemies import Crab
-from ..objects.tiles import Tile, Tileset
+from ..objects.tiles import Tile, Tileset, TriggerTile
 from ..services.save import Saver
 from ..services.sound import SoundMixer
 from ..ui.Text_displ import text_displ
@@ -27,8 +28,11 @@ class PlayScene(BaseScene):
             'left': [],
             'right': []
         }
+        self.triggers = {}
         self.interact_rects = []
 
+        self.bg = GameObject(self.all_sprites)
+        self.bg._load_image(Path.sprite('bg'))
         self.generate_level('level1')
 
         self.player = Player(
@@ -41,6 +45,21 @@ class PlayScene(BaseScene):
         self.text = ''
 
     def generate_level(self, level_name: str):
+        self.floor_rects.clear()
+        self.wall_rects = {
+            'left': [],
+            'right': []
+        }
+        self.interact_rects.clear()
+
+        self.triggers.clear()
+
+        self.tiles.empty()
+        self.all_sprites.empty()
+
+        self.bg = GameObject(self.all_sprites)
+        self.bg._load_image(Path.sprite('bg'))
+
         level_data = Path.data(level_name, ext='txt')
         with open(level_data, 'r', encoding='utf-8') as f:
             level_data = f.readlines()
@@ -48,7 +67,23 @@ class PlayScene(BaseScene):
             for x, tile in enumerate(line.split('; ')):
                 if tile == '-':
                     continue
-                i, j, t = tile.split(',')
+                tile_list = tile.split(',')
+                if len(tile_list) == 4:
+                    t, i, h, w = tile_list
+
+                    new_tile = TriggerTile(
+                        int(i), (int(h), int(w)), (x + constants.LEVEL_OFFSET[0], y + constants.LEVEL_OFFSET[1]), 4,
+                        self.all_sprites, self.tiles
+                    )
+
+                    if not self.triggers.get(i, False):
+                        self.triggers[i] = []
+                    self.triggers[i].append(new_tile.rect)
+                    continue
+                elif len(tile_list) == 3:
+                    i, j, t = tile_list
+                else:
+                    continue
                 types = list(map(str.strip, t.split('+')))
                 if 'i' in types:
                     new_tile = Tile(
@@ -103,14 +138,19 @@ class PlayScene(BaseScene):
                             SoundMixer.unpause_music()
                             self.is_paused = False
                     case pygame.K_e:
-                        print(self.subscene, self.is_paused)
-                        if not self.is_paused:
-                            from .subscenes.signs import SignSubscene
-                            self.open_subscene(SignSubscene(self, 1))
-                            self.is_paused = True
-                        elif self.subscene:
-                            self.subscene.destroy()
-                            self.is_paused = False
+                        interaction_i = self.player.rect.collidelist(self.interact_rects)
+                        if interaction_i != -1:
+                            if not self.is_paused:
+                                from .subscenes.signs import SignSubscene
+                                self.open_subscene(SignSubscene(self, interaction_i))
+                                self.is_paused = True
+                            elif self.subscene:
+                                self.subscene.destroy()
+                                self.is_paused = False
+                    case pygame.K_r:
+                        self.generate_level('level1')
+                    case pygame.K_t:
+                        dev.DEBUG = not dev.DEBUG
             elif event.type == pygame.KEYUP:
                 match event.key:
                     case pygame.K_LEFT | pygame.K_a:
@@ -130,7 +170,10 @@ class PlayScene(BaseScene):
         self.all_sprites.draw(screen)
         if dev.DEBUG:
             for sprite in self.all_sprites.spritedict.keys():
-                pygame.draw.rect(screen, (0, 255, 0), sprite.rect, 2, 1)
+                if isinstance(sprite, TriggerTile):
+                    pygame.draw.rect(screen, (255, 0, 0), sprite.rect, 2, 1)
+                else:
+                    pygame.draw.rect(screen, (0, 255, 0), sprite.rect, 2, 1)
         if not self.is_paused:
             self.all_sprites.update()
 

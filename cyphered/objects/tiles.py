@@ -41,3 +41,18 @@ class Tile(pygame.sprite.Sprite):
             constants.TILE_SIZE * coords[1] * tileset.multiplier
         )
         tileset.tiles.append(self)
+
+
+class TriggerTile(pygame.sprite.Sprite):
+    def __init__(self, trigger_id, size: tuple[int, int], coords: tuple[int, int], multiplier, *groups):
+        super().__init__(*groups)
+        self.id = trigger_id
+        self.image = pygame.Surface((
+            constants.TILE_SIZE * multiplier * size[0],
+            constants.TILE_SIZE * multiplier * size[1]
+        ))
+        self.image.set_alpha(0)
+        self.rect = self.image.get_rect().move(
+            constants.TILE_SIZE * coords[0] * multiplier,
+            constants.TILE_SIZE * coords[1] * multiplier,
+        )
