@@ -56,24 +56,28 @@ class Player(AnimatedGameObject):
                               self.rect.collidelist(self.scene.wall_rects['right']) != -1)
         is_colliding_floor = self.rect.collidelist(self.scene.floor_rects) != -1
 
-        if self.key_state[0] and self.rect.collidelist(self.scene.wall_rects['left']) == -1:
+        if self.key_state[0] and self.rect.collidelist(self.scene.wall_rects['left']) == -1 and is_colliding_floor:
             self.rect = self.rect.move(-self.key_state[2], 0)
             self.animation.is_facing_right = False
-        if self.key_state[1] and self.rect.collidelist(self.scene.wall_rects['right']) == -1:
+        if self.key_state[1] and self.rect.collidelist(self.scene.wall_rects['right']) == -1 and is_colliding_floor:
             self.rect = self.rect.move(self.key_state[2], 0)
             self.animation.is_facing_right = True
 
         if not is_colliding_floor:
             self.rect = self.rect.move(0, 2)
-
-        if self.key_state[0] and self.key_state[1]:
             self.switch_state('idle', 25)
-        elif self.key_state[0] or self.key_state[1]:
-            self.switch_state('walk', 10)
         else:
-            self.switch_state('idle', 25)
+            if self.key_state[0] and self.key_state[1]:
+                self.switch_state('idle', 25)
+            elif self.key_state[0] or self.key_state[1]:
+                self.switch_state('walk', 10)
+            else:
+                self.switch_state('idle', 25)
 
         super().update()
+
+    def move(self):
+        ...
 
     def to_save_dict(self):
         return {

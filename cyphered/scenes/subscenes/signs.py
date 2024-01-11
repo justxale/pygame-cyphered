@@ -14,15 +14,21 @@ SECOND_TEXT = """
 """
 
 TEXTS = {
-    0: FIRST_TEXT,
-    1: SECOND_TEXT
+    'level_1': {
+        0: FIRST_TEXT,
+        1: SECOND_TEXT
+    },
+    'level_2': {
+
+    }
 }
 
 
 class SignSubscene(BaseSubscene):
-    def __init__(self, parent_scene, sign_number):
+    def __init__(self, parent_scene, level_name, sign_number):
         super().__init__(parent_scene)
         self.i = sign_number
+        self.level_i = level_name
 
     def render(self, screen: pygame.Surface):
         super().render(screen)
@@ -30,4 +36,4 @@ class SignSubscene(BaseSubscene):
         s.set_alpha(128)
         s.fill((0, 0, 0))
         screen.blit(s, (0, 0))
-        multiple_text_discpl(screen, TEXTS[self.i], (100, 100), font_size=24)
+        multiple_text_discpl(screen, TEXTS[self.level_i][self.i], (100, 100), font_size=24)

@@ -13,7 +13,7 @@ from ..ui.Text_displ import text_displ
 
 
 class PlayScene(BaseScene):
-    def __init__(self):
+    def __init__(self, level_name: str = 'level1'):
         BaseScene.__init__(self)
         self.all_sprites = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
@@ -33,13 +33,13 @@ class PlayScene(BaseScene):
 
         self.bg = GameObject(self.all_sprites)
         self.bg._load_image(Path.sprite('bg'))
-        self.generate_level('level1')
 
+        self.level_name = level_name
+        player_data = self.generate_level(self.level_name)
         self.player = Player(
             'new_idle', 4, 2, self, self.all_sprites, self.player_group,
-            x=250, y=450
+            x=int(player_data[0]), y=int(player_data[1])
         )
-
         self.crab = Crab(self.all_sprites, self.enemies)
 
         self.text = ''
@@ -63,7 +63,9 @@ class PlayScene(BaseScene):
         level_data = Path.data(level_name, ext='txt')
         with open(level_data, 'r', encoding='utf-8') as f:
             level_data = f.readlines()
-        for y, line in enumerate(level_data):
+            player_data = level_data[0].strip().split(',')
+
+        for y, line in enumerate(level_data[1:]):
             for x, tile in enumerate(line.split('; ')):
                 if tile == '-':
                     continue
@@ -77,8 +79,8 @@ class PlayScene(BaseScene):
                     )
 
                     if not self.triggers.get(i, False):
-                        self.triggers[i] = []
-                    self.triggers[i].append(new_tile.rect)
+                        self.triggers[int(i)] = []
+                    self.triggers[int(i)].append(new_tile.rect)
                     continue
                 elif len(tile_list) == 3:
                     i, j, t = tile_list
@@ -114,6 +116,7 @@ class PlayScene(BaseScene):
                             self.all_sprites, self.tiles
                         )
                         self.floor_rects.append(new_tile.rect)
+        return player_data
 
     def process_events(self, events):
         super().process_events(events)
@@ -142,13 +145,13 @@ class PlayScene(BaseScene):
                         if interaction_i != -1:
                             if not self.is_paused:
                                 from .subscenes.signs import SignSubscene
-                                self.open_subscene(SignSubscene(self, interaction_i))
+                                self.open_subscene(SignSubscene(self, self.level_name, interaction_i))
                                 self.is_paused = True
                             elif self.subscene:
                                 self.subscene.destroy()
                                 self.is_paused = False
                     case pygame.K_r:
-                        self.generate_level('level1')
+                        self.generate_level(self.level_name)
                     case pygame.K_t:
                         dev.DEBUG = not dev.DEBUG
             elif event.type == pygame.KEYUP:
@@ -164,6 +167,10 @@ class PlayScene(BaseScene):
             self.text = 'Нажмите E, чтоб заимодействовать.'
         else:
             self.text = ''
+        if self.triggers.get(1) is not None and self.player.rect.collidelist(self.triggers[1]) != -1:
+            if not self.is_paused:
+                self.fade_and_switch_scene(PlayScene('level2'))
+                self.is_paused = True
 
     def render(self, screen):
         screen.fill(constants.BG_COLOR)
@@ -172,6 +179,8 @@ class PlayScene(BaseScene):
             for sprite in self.all_sprites.spritedict.keys():
                 if isinstance(sprite, TriggerTile):
                     pygame.draw.rect(screen, (255, 0, 0), sprite.rect, 2, 1)
+                elif sprite.rect in self.interact_rects:
+                    pygame.draw.rect(screen, (0, 0, 255), sprite.rect, 2, 1)
                 else:
                     pygame.draw.rect(screen, (0, 255, 0), sprite.rect, 2, 1)
         if not self.is_paused:
