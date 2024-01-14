@@ -32,7 +32,7 @@ class PauseSubscene(BaseSubscene):
 
                     if self.save_and_exit_button[2].collidepoint(mouse_pos):
                         from ..title import TitleScene
-                        Saver.save_all()
+                        Saver.save_all(self.parent_scene)
                         self.switch_scene(TitleScene(), True)
                         SoundMixer.switch_music('redwood_colonnade')
                         break

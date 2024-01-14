@@ -33,14 +33,22 @@ class Tileset:
 
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, tileset: Tileset, tile_type: tuple[int, int], coords: tuple[int, int], *groups):
-        super().__init__(*groups)
-        self.image = tileset.get_tile(*tile_type)
+    def __init__(self, tileset: Tileset, tile_sprite: tuple[int, int], coords: tuple[int, int], *groups, tile_layer=-1):
+        super().__init__()
+        self.tileset = tileset
+        if tile_layer != -1:
+            self.layer = tile_layer
+        for g in groups:
+            g.add(self)
+        self.image = tileset.get_tile(*tile_sprite)
         self.rect = self.image.get_rect().move(
-            constants.TILE_SIZE * coords[0] * tileset.multiplier,
-            constants.TILE_SIZE * coords[1] * tileset.multiplier
+            constants.TILE_SIZE * coords[0] * self.tileset.multiplier,
+            constants.TILE_SIZE * coords[1] * self.tileset.multiplier
         )
         tileset.tiles.append(self)
+
+    def change_tile(self, new_tile: tuple[int, int]):
+        self.image = self.tileset.get_tile(*new_tile)
 
 
 class TriggerTile(pygame.sprite.Sprite):
@@ -56,3 +64,25 @@ class TriggerTile(pygame.sprite.Sprite):
             constants.TILE_SIZE * coords[0] * multiplier,
             constants.TILE_SIZE * coords[1] * multiplier,
         )
+
+
+class HiddenTile(TriggerTile):
+    def __init__(self, trigger_id, size: tuple[int, int], coords: tuple[int, int], multiplier, rects, *groups):
+        super().__init__(trigger_id, size, coords, multiplier)
+        self.layer = 3
+        self.rects = rects
+        for g in groups:
+            g.add(self)
+        self.tileset = Tileset('tiles', 10, 15, mult=4)
+        self.image = self.tileset.get_tile(2, 3)
+        self.alpha_counter = 255
+
+    def update(self, *args, **kwargs):
+        if pygame.sprite.collide_rect(self.rects[0], self.rects[1]):
+            if self.alpha_counter >= 0:
+                self.alpha_counter -= 4
+        else:
+            if self.alpha_counter <= 255:
+                self.alpha_counter += 4
+        self.image.set_alpha(self.alpha_counter)
+

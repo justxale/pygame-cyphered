@@ -14,12 +14,13 @@ SECOND_TEXT = """
 """
 
 TEXTS = {
-    'level_1': {
+    'level1': {
         0: FIRST_TEXT,
         1: SECOND_TEXT
     },
-    'level_2': {
-
+    'level2': {
+        0: FIRST_TEXT,
+        1: SECOND_TEXT
     }
 }
 

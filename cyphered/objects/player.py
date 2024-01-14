@@ -8,8 +8,11 @@ class Player(AnimatedGameObject):
     def __init__(self, filename, columns, rows, play_scene,  *groups, x=0, y=0):
         super().__init__(
             self.load_image(filename, 'player', transparent=True),
-            columns, rows, *groups, x=x, y=y, mult=3
+            columns, rows, x=x, y=y, mult=3
         )
+        self.layer = 1
+        for g in groups:
+            g.add(self)
         self.rect.x = x
         self.rect.y = y
         self.mask = pygame.mask.from_surface(self.image)
@@ -81,7 +84,8 @@ class Player(AnimatedGameObject):
 
     def to_save_dict(self):
         return {
-            'oid': 'player',
-            'x': self.rect.x,
-            'y': self.rect.y
+            'player': {
+                'x': self.rect.x,
+                'y': self.rect.y
+            }
         }

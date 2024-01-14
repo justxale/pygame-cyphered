@@ -34,9 +34,12 @@ class Path:
 
     # Usage: Paths.save('save1')
     @classmethod
-    def save(cls, filename: str, *dirs) -> str:
+    def savefile(cls, filename: str, *dirs) -> str:
         """Returns a path of SAVE JSON file by its filename."""
-        return os.path.join(SAVES_PATH, *dirs, f'{filename}.json')
+        if dirs:
+            return os.path.join(SAVES_PATH, *dirs, f'{filename}.json')
+        else:
+            return os.path.join(SAVES_PATH, f'{filename}.json')
 
     # Usage: Paths.settings()
     @classmethod

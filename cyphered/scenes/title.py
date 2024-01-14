@@ -3,6 +3,7 @@ import pygame
 from . import SettingsScene
 from .base import BaseScene
 from .play import PlayScene
+from ..services.save import Saver
 from ..ui import Button
 from ..services.sound import SoundMixer
 from .look_around import LookAround
@@ -33,7 +34,10 @@ class TitleScene(BaseScene):
                         break
 
                     if self.continue_button[2].collidepoint(mouse_pos):
-                        # self.switch_scene(SettingsScene())
+                        save = Saver.load_save_file('save1')
+                        if save:
+                            self.fade_and_switch_scene(PlayScene(save_data=save))
+                            SoundMixer.switch_music('background_music')
                         break
 
                     if self.settings_button[2].collidepoint(mouse_pos):
