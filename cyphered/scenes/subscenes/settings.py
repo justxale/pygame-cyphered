@@ -77,8 +77,7 @@ class SettingsSubscene(BaseSubscene):
 
         text_displ(str(int(Settings.music_volume * 10)), screen, step_x=-405, step_y=-30, font_size=25)
 
-        text_displ("Прыжок", screen, step_x=-160, step_y=-80, font_size=25,
-                   fontfile="./resources/fonts/font.ttf")
+        text_displ("Прыжок", screen, step_x=-160, step_y=-80, font_size=25)
         text_displ("Управление кнопками движения вправо-влево", screen, step_x=250, step_y=-80, font_size=25)
 
         for button in self.buttons:
