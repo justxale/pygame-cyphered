@@ -159,7 +159,6 @@ class PlayScene(BaseScene):
                             (x + constants.LEVEL_OFFSET[0], y + constants.LEVEL_OFFSET[1]),
                             self.all_sprites, self.tiles, tile_layer=2
                         )
-                        self.floor_rects.append(new_tile.rect)
         print(self.all_sprites.layers())
 
     def process_events(self, events):
