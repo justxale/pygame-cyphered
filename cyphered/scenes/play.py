@@ -146,6 +146,13 @@ class PlayScene(BaseScene):
                             self.all_sprites, self.tiles, tile_layer=2
                         )
                         self.wall_rects['right'].append(new_tile.rect)
+                    if 'f' in types:
+                        new_tile = Tile(
+                            self.main_tileset, (int(i), int(j)),
+                            (x + constants.LEVEL_OFFSET[0], y + constants.LEVEL_OFFSET[1]),
+                            self.all_sprites, self.tiles, tile_layer=2
+                        )
+                        self.floor_rects.append(new_tile.rect)
                     else:
                         new_tile = Tile(
                             self.main_tileset, (int(i), int(j)),
@@ -235,3 +242,9 @@ class PlayScene(BaseScene):
             self.player_group.update()
 
         text_displ(self.text, screen, font_size=24, step_y=300, step_x=-350)
+
+    def on_destroy(self):
+        self.all_sprites.empty()
+        self.player_group.empty()
+        self.tiles.empty()
+        self.interact_rects.clear()
