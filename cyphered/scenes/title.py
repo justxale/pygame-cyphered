@@ -6,7 +6,7 @@ from .play import PlayScene
 from ..services.save import Saver
 from ..ui import Button
 from ..services.sound import SoundMixer
-from .search import SearchScene
+from .rules import RulesScene
 
 
 class TitleScene(BaseScene):
@@ -51,7 +51,7 @@ class TitleScene(BaseScene):
                         break
 
                     if self.search_button[2].collidepoint(mouse_pos):
-                        self.switch_scene(SearchScene())
+                        self.switch_scene(RulesScene())
 
     def render(self, screen):
         for button in self.buttons:

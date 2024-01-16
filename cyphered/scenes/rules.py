@@ -7,7 +7,7 @@ from cyphered.ui.Text_displ import text_displ
 from ..services.sound import SoundMixer
 
 
-class SearchScene(BaseScene):
+class RulesScene(BaseScene):
     def __init__(self):
         BaseScene.__init__(self)
 
@@ -25,7 +25,7 @@ class SearchScene(BaseScene):
                     if self.back_button[2].collidepoint(mouse_pos):
                         # self.switch_scene(LookAround())
                         from .title import TitleScene
-                        self.fade_and_switch_scene(TitleScene())
+                        self.switch_scene(TitleScene())
                         SoundMixer.switch_music('background_music')
                         break
 
