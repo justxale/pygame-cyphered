@@ -9,6 +9,7 @@ from ..objects.tiles import Tile, Tileset, TriggerTile, HiddenTile
 from ..services.save import Saver
 from ..services.sound import SoundMixer
 from ..ui.Text_displ import text_displ
+from ..services.settings import Settings
 
 
 class PlayScene(BaseScene):
@@ -22,6 +23,7 @@ class PlayScene(BaseScene):
 
         self.main_tileset = Tileset('tiles', 10, 15, mult=4)
         self.decorations = Tileset('decor', 3, 3, mult=4)
+        # self.objects = Tileset('objects', )
 
         self.floor_rects = []
         self.wall_rects = {
@@ -164,16 +166,22 @@ class PlayScene(BaseScene):
     def process_events(self, events):
         super().process_events(events)
         for event in events:
+            from .subscenes.furniture import Furniture
+            # self.open_subscene(Furniture(self, self.level_name, interaction_i))
             if event.type == pygame.KEYDOWN:
                 match event.key:
-                    case pygame.K_LEFT | pygame.K_a:
-                        if not self.is_paused:
+                    case pygame.K_LEFT:
+                        if not self.is_paused and Settings.move_keys == 'arrows':
                             self.player_group.update('keydown', move_x=2, k='left')
-                    case pygame.K_RIGHT | pygame.K_d:
-                        if not self.is_paused:
+                    case pygame.K_a:
+                        if not self.is_paused and Settings.move_keys == 'ad':
+                            self.player_group.update('keydown', move_x=2, k='left')
+                    case pygame.K_RIGHT:
+                        if not self.is_paused and Settings.move_keys == 'arrows':
                             self.player_group.update('keydown', move_x=2, k='right')
-                    case pygame.K_UP:
-                        self.player_group.update()
+                    case pygame.K_d:
+                        if not self.is_paused and Settings.move_keys == 'ad':
+                            self.player_group.update('keydown', move_x=2, k='right')
                     case pygame.K_ESCAPE:
                         if not self.is_paused:
                             self.open_subscene(PauseSubscene(self))
@@ -184,7 +192,7 @@ class PlayScene(BaseScene):
                             SoundMixer.unpause_music()
                             self.is_paused = False
                     case pygame.K_e:
-                        interaction_i = self.player.rect.collidelist(self.interact_rects)
+                        interaction_i = self.player.rect.collidelist(self.intera)
                         if interaction_i != -1:
                             if not self.is_paused:
                                 from .subscenes.signs import SignSubscene
@@ -193,6 +201,8 @@ class PlayScene(BaseScene):
                             elif self.subscene:
                                 self.subscene.destroy()
                                 self.is_paused = False
+                    # case pygame.K_f:
+                    #     interaction_f = self.player.rect.collidelist(self.)
                     case pygame.K_r:
                         self.generate_level()
                     case pygame.K_t:

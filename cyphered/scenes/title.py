@@ -6,18 +6,20 @@ from .play import PlayScene
 from ..services.save import Saver
 from ..ui import Button
 from ..services.sound import SoundMixer
-from .look_around import LookAround
+from .search import SearchScene
 
 
 class TitleScene(BaseScene):
     def __init__(self):
         BaseScene.__init__(self)
 
-        self.start_button = Button("Играть", step_x=-400, step_y=-50)
-        self.continue_button = Button("Продолжить", step_x=-400, step_y=50)
+        self.start_button = Button("Играть", step_x=-400, step_y=-150)
+        self.continue_button = Button("Продолжить", step_x=-400, step_y=-50)
+        self.search_button = Button("Правила", step_x=-400, step_y=50)
         self.settings_button = Button("Настройки", step_x=-400, step_y=150)
         self.quit_button = Button("Выйти из игры", step_x=-400, step_y=250)
-        self.buttons = [self.start_button, self.continue_button, self.settings_button, self.quit_button]
+        self.buttons = [self.start_button, self.continue_button, self.settings_button, self.quit_button,
+                        self.search_button]
 
         if not SoundMixer.music_loaded:
             SoundMixer.play_music("redwood_colonnade")
@@ -47,6 +49,9 @@ class TitleScene(BaseScene):
                     if self.quit_button[2].collidepoint(mouse_pos):
                         self.destroy()
                         break
+
+                    if self.search_button[2].collidepoint(mouse_pos):
+                        self.switch_scene(SearchScene())
 
     def render(self, screen):
         for button in self.buttons:
