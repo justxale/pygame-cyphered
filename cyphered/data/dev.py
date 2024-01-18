@@ -1,3 +1,3 @@
-VERSION = (0, 0, 1)
-BUILD = 4
-DEBUG = True
+VERSION = (0, 1, 2)
+BUILD = 58
+DEBUG = False

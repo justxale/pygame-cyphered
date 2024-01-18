@@ -3,7 +3,7 @@ import pygame
 from ..base import BaseSubscene
 from ...services.save import Saver
 from ...services.sound import SoundMixer
-from ...ui.Multiple_text_displ import multiple_text_discpl
+from ...ui.text import display_multiline_text
 from ...data.constants import SCREEN_SIZE
 
 FIRST_TEXT = """Ищи подсказки, разгадывай шифры,
@@ -37,4 +37,4 @@ class SignSubscene(BaseSubscene):
         s.set_alpha(128)
         s.fill((0, 0, 0))
         screen.blit(s, (0, 0))
-        multiple_text_discpl(screen, TEXTS[self.level_i][self.i], (100, 100), font_size=24)
+        display_multiline_text(screen, TEXTS[self.level_i][self.i], (100, 100), font_size=24)

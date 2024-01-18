@@ -4,7 +4,7 @@ from ..base import BaseSubscene
 from ...data.constants import SCREEN_SIZE
 from ...ui import Button
 from ...services.settings import Settings
-from ...ui.Text_displ import text_displ
+from ...ui.text import display_text
 
 
 class SettingsSubscene(BaseSubscene):
@@ -73,13 +73,13 @@ class SettingsSubscene(BaseSubscene):
         s.fill((0, 0, 0))
         screen.blit(s, (0, 0))
 
-        text_displ("Громкость музыки", screen, step_x=-390, step_y=-80, font_size=25)
+        display_text("Громкость музыки", screen, step_x=-390, step_y=-80, font_size=25)
 
-        text_displ(str(int(Settings.music_volume * 10)), screen, step_x=-405, step_y=-30, font_size=25)
+        display_text(str(int(Settings.music_volume * 10)), screen, step_x=-405, step_y=-30, font_size=25)
 
-        text_displ("Прыжок", screen, step_x=-160, step_y=-80, font_size=25)
-        text_displ("Управление кнопками движения вправо-влево", screen, step_x=250, step_y=-80, font_size=25)
+        display_text("Прыжок", screen, step_x=-160, step_y=-80, font_size=25)
+        display_text("Управление кнопками движения вправо-влево", screen, step_x=250, step_y=-80, font_size=25)
 
         for button in self.buttons:
-            pygame.draw.rect(screen, (0, 0, 0), button[2])
+            # pygame.draw.rect(screen, (0, 0, 0), button[2])
             screen.blit(button[0], button[1])

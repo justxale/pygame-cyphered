@@ -8,16 +8,13 @@ class GameObject(pygame.sprite.Sprite):
         self.is_listened = False
         self.rect = pygame.Rect(0, 0, 1, 1)
 
-    def _load_image(self, filename, colorkey=None):
+    def self_load_image(self, filename, transparent=False):
         path = filename
         image = pygame.image.load(path)
-        if colorkey is not None:
-            image = image.convert()
-            if colorkey == -1:
-                colorkey = image.get_at((0, 0))
-            image.set_colorkey(colorkey)
-        else:
+        if transparent:
             image = image.convert_alpha()
+        else:
+            image = image.convert()
         self.image = image
 
     @staticmethod

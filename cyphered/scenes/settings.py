@@ -1,14 +1,20 @@
 import pygame
 
 from .base import BaseScene
+from ..data import Path
+from ..objects.base import GameObject
 from ..ui import Button
 from ..services.settings import Settings
-from cyphered.ui.Text_displ import text_displ
+from cyphered.ui.text import display_text
 
 
 class SettingsScene(BaseScene):
     def __init__(self):
         BaseScene.__init__(self)
+        self.sprites = pygame.sprite.Group()
+
+        self.bg = GameObject(self.sprites)
+        self.bg.self_load_image(Path.sprite('bg'))
         if Settings.jump_key == "space":
             self.jump_button = Button("пробел", font_size=25, step_x=-160)  # fontt='./Resources/font.ttf')
         elif Settings.jump_key == "w":
@@ -58,22 +64,15 @@ class SettingsScene(BaseScene):
                         self.switch_scene(TitleScene())
 
     def render(self, screen):
-        # if music == 'on':
-        #     color_music_button = (255, 0, 0)
-        pygame.draw.rect(screen, (0, 0, 0), self.music_button_plus[2])
+        self.sprites.draw(screen)
         screen.blit(self.music_button_plus[0], self.music_button_plus[1])
-        pygame.draw.rect(screen, (0, 0, 0), self.music_button_minus[2])
         screen.blit(self.music_button_minus[0], self.music_button_minus[1])
-        text_displ("Громкость музыки", screen, step_x=-390, step_y=-80, font_size=25)
 
-        text_displ(str(int(Settings.music_volume * 10)), screen, step_x=-405, step_y=-30, font_size=25)
+        display_text("Громкость музыки", screen, step_x=-390, step_y=-80, font_size=25)
+        display_text(str(int(Settings.music_volume * 10)), screen, step_x=-405, step_y=-30, font_size=25)
+        display_text("Прыжок", screen, step_x=-160, step_y=-80, font_size=25)
+        display_text("Управление кнопками движения вправо-влево", screen, step_x=250, step_y=-80, font_size=25)
 
-        text_displ("Прыжок", screen, step_x=-160, step_y=-80, font_size=25)
-        text_displ("Управление кнопками движения вправо-влево", screen, step_x=250, step_y=-80, font_size=25)
-        pygame.draw.rect(screen, (0, 0, 0), self.jump_button[2])
         screen.blit(self.jump_button[0], self.jump_button[1])
-
-        pygame.draw.rect(screen, (0, 0, 0), self.rightleft_button[2])
         screen.blit(self.rightleft_button[0], self.rightleft_button[1])
-        pygame.draw.rect(screen, (0, 0, 0), self.back[2])
         screen.blit(self.back[0], self.back[1])

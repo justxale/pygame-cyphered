@@ -2,9 +2,13 @@ import pygame
 
 from . import SettingsScene
 from .base import BaseScene
+from .look_around import LookAroundScene
 from .play import PlayScene
+from ..data import Path, dev
+from ..objects.base import GameObject
 from ..services.save import Saver
 from ..ui import Button
+from ..ui.text import display_text
 from ..services.sound import SoundMixer
 from .rules import RulesScene
 
@@ -12,6 +16,10 @@ from .rules import RulesScene
 class TitleScene(BaseScene):
     def __init__(self):
         BaseScene.__init__(self)
+        self.sprites = pygame.sprite.Group()
+
+        self.bg = GameObject(self.sprites)
+        self.bg.self_load_image(Path.sprite('bg'))
 
         self.start_button = Button("Играть", step_x=-400, step_y=-150)
         self.continue_button = Button("Продолжить", step_x=-400, step_y=-50)
@@ -30,9 +38,9 @@ class TitleScene(BaseScene):
                 if event.button == 1:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.start_button[2].collidepoint(mouse_pos):
-                        # self.switch_scene(LookAround())
-                        self.fade_and_switch_scene(PlayScene())
-                        SoundMixer.switch_music('background_music')
+                        self.switch_scene(LookAroundScene())
+                        # self.fade_and_switch_scene(PlayScene())
+                        # SoundMixer.switch_music('background_music')
                         break
 
                     if self.continue_button[2].collidepoint(mouse_pos):
@@ -54,6 +62,9 @@ class TitleScene(BaseScene):
                         self.switch_scene(RulesScene())
 
     def render(self, screen):
+        self.sprites.draw(screen)
         for button in self.buttons:
-            pygame.draw.rect(screen, (0, 0, 0), button[2])
+            pygame.draw.rect(screen, (255, 255, 255), button[2], width=4, border_radius=16)
             screen.blit(button[0], button[1])
+        display_text('.'.join(map(str, dev.VERSION)) + f' | {dev.BUILD}', screen, step_y=250, step_x=450)
+        display_text('C y p h e r e d', screen, step_x=-300, step_y=-300, font_size=80)

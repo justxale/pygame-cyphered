@@ -1,63 +1,40 @@
 import pygame
 
 from .base import BaseScene
+from ..data import Path
+from ..objects.base import GameObject
+from ..services.sound import SoundMixer
 from ..ui import Button
-from cyphered.ui.Multiple_text_displ import multiple_text_discpl
+from ..ui.text import display_multiline_text
+
+TEXT = """С недобрым утром! Голова раскалывается...
+Эх, хорошо вчера видимо погулял, ничего не помню...
+Вроде бы пообещал себе завязывать с этими делами,
+ну что такое!.. Стоп... Я в пещере?
+Что тут произошло... Стоит осмотреться"""
 
 
-class LookAround(BaseScene):
+class LookAroundScene(BaseScene):
     def __init__(self):
         BaseScene.__init__(self)
-        self.music_button_plus = Button("+", font_color=(255, 255, 255), step_x=-370, font_size=35)
-        self.music_button_minus = Button("-", font_color=(255, 255, 255), step_x=-440, font_size=35)
-        self.back = Button("Назад", font_color=(255, 255, 255), step_x=550, font_size=35, step_y=-250)
+        self.sprites = pygame.sprite.Group()
+
+        self.bg = GameObject(self.sprites)
+        self.bg.self_load_image(Path.sprite('bg'))
+        self.continue_button = Button("Продолжить", font_color=(255, 255, 255), step_x=370, font_size=35, step_y=300)
 
     def process_events(self, events):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
+                    from .play import PlayScene
                     mouse_pos = pygame.mouse.get_pos()
-                    # if self.music_button_plus[2].collidepoint(mouse_pos):
-                    #     if Settings.music_volume + 0.1 <= 1:
-                    #         Settings.music_volume += 0.1
-                    #     else:
-                    #         Settings.music_volume = 1.0
-                    # elif self.music_button_minus[2].collidepoint(mouse_pos):
-                    #     if Settings.music_volume - 0.1 >= 0:
-                    #         Settings.music_volume -= 0.1
-                    #     else:
-                    #         Settings.music_volume = 0.0
-                    # Settings.music_volume = round(Settings.music_volume, 1)
-                    # pygame.mixer.music.set_volume(Settings.music_volume)
-                    # if self.jump_button[2].collidepoint(mouse_pos):
-                    #     if Settings.jump_key == "w":
-                    #         Settings.jump_key = 'space'
-                    #         self.jump_button = Button("пробел", font_size=25, step_x=-160)
-                    #     else:
-                    #         Settings.jump_key = 'w'
-                    #         self.jump_button = Button("w", font_size=25, step_x=-160)
-                    # if self.rightleft_button[2].collidepoint(mouse_pos):
-                    #     if Settings.move_keys == "arrows":
-                    #         Settings.move_keys = "ad"
-                    #         self.rightleft_button = Button("ad", step_x=300, font_size=25)
-                    #     else:
-                    #         Settings.move_keys = "arrows"
-                    #         self.rightleft_button = Button("стрелки", step_x=300, font_size=25)
-                    # Settings.save_settings()
-                    # if self.back[2].collidepoint(mouse_pos):
-                    #     from .title import TitleScene
-                    #     self.switch_scene(TitleScene())
+                    if self.continue_button[2].collidepoint(mouse_pos):
+                        self.fade_and_switch_scene(PlayScene())
+                        SoundMixer.switch_music('crossroads', volume=0.2)
 
     def render(self, screen):
-
-        multiple_text_discpl(screen, """            С недобрым утром! Голова раскалывается...
-           Эх, хорошо вчера видимо погулял, ничего не помню...
-           Вроде бы пообещал себе завязывать с этими делами,
-           ну что такое!.. Так, стоп, что это за комната?
-           Не моя... И что-то она странная какая-то, как
-           будто из 90-х... Надо бы осмотреться""", (140, 250), font_size=40)
-
-        # pygame.draw.rect(screen, (0, 0, 0), self.rightleft_button[2])
-        # screen.blit(self.rightleft_button[0], self.rightleft_button[1])
-        # pygame.draw.rect(screen, (0, 0, 0), self.back[2])
-        # screen.blit(self.back[0], self.back[1])
+        self.sprites.draw(screen)
+        display_multiline_text(screen, TEXT, (40, 100), font_size=40)
+        pygame.draw.rect(screen, (255, 255, 255), self.continue_button[2], width=4)
+        screen.blit(self.continue_button[0], self.continue_button[1])

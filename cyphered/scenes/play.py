@@ -8,7 +8,7 @@ from ..objects.base import GameObject
 from ..objects.tiles import Tile, Tileset, TriggerTile, HiddenTile
 from ..services.save import Saver
 from ..services.sound import SoundMixer
-from ..ui.Text_displ import text_displ
+from ..ui.text import display_text
 from ..services.settings import Settings
 
 
@@ -34,7 +34,7 @@ class PlayScene(BaseScene):
         self.interact_rects = []
 
         self.bg = GameObject(self.all_sprites)
-        self.bg._load_image(Path.sprite('bg'))
+        self.bg.self_load_image(Path.sprite('bg'))
         self.player = None
 
         if save_data:
@@ -69,7 +69,7 @@ class PlayScene(BaseScene):
         self.enemies.empty()
 
         self.bg = GameObject(self.all_sprites)
-        self.bg._load_image(Path.sprite('bg'))
+        self.bg.self_load_image(Path.sprite('bg'))
 
         if self.player is None:
             self.player_group.empty()
@@ -250,7 +250,7 @@ class PlayScene(BaseScene):
             self.all_sprites.update()
             self.player_group.update()
 
-        text_displ(self.text, screen, font_size=24, step_y=300, step_x=-350)
+        display_text(self.text, screen, font_size=24, step_y=300, step_x=-350)
 
     def on_destroy(self):
         self.all_sprites.empty()

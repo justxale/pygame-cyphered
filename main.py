@@ -10,10 +10,8 @@ from cyphered.scenes import TitleScene
 Settings.load_settings()
 
 
-def start_game(screen_size, fps, starting_scene):
+def start_game(screen, fps, starting_scene):
 
-    screen = pygame.display.set_mode(screen_size)
-    # clock = pygame.time.Clock()
     fps_display = FPS()
     pygame.display.set_caption('Cyphered')
     SoundMixer()  # объект класса плеера
@@ -40,5 +38,6 @@ def start_game(screen_size, fps, starting_scene):
 
 if __name__ == '__main__':
     pygame.init()
-    start_game(constants.SCREEN_SIZE, constants.FPS, TitleScene())
+    screen = pygame.display.set_mode(constants.SCREEN_SIZE)
+    start_game(screen, constants.FPS, TitleScene())
     pygame.quit()

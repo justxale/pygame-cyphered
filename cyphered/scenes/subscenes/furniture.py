@@ -1,7 +1,7 @@
 import pygame
 from ...scenes.base import BaseSubscene
 from ...data.constants import SCREEN_SIZE
-from ...ui.Multiple_text_displ import multiple_text_discpl
+from ...ui.text import display_multiline_text
 
 
 class Furniture(BaseSubscene):
