@@ -192,7 +192,7 @@ class PlayScene(BaseScene):
                             SoundMixer.unpause_music()
                             self.is_paused = False
                     case pygame.K_e:
-                        interaction_i = self.player.rect.collidelist(self.intera)
+                        interaction_i = self.player.rect.collidelist(self.interact_rects)
                         if interaction_i != -1:
                             if not self.is_paused:
                                 from .subscenes.signs import SignSubscene
