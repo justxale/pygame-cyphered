@@ -1,26 +1,23 @@
 import pygame
 
 from ..base import BaseSubscene
-from ...services.save import Saver
-from ...services.sound import SoundMixer
 from ...ui.text import display_multiline_text
 from ...data.constants import SCREEN_SIZE
 
 FIRST_TEXT = """Ищи подсказки, разгадывай шифры,
-Уйди отсюда живым. Удачи!~"""
+Уйди отсюда живым. Удачи!~
+                        - Неизвестный"""
 
-SECOND_TEXT = """
-
-"""
+SECOND_TEXT = """Иногда даже в тени может быть спрятано что-то 
+действительно нужное~
+                        - Неизвестный"""
 
 TEXTS = {
     'level1': {
         0: FIRST_TEXT,
-        1: SECOND_TEXT
     },
     'level2': {
-        0: FIRST_TEXT,
-        1: SECOND_TEXT
+        0: SECOND_TEXT,
     }
 }
 
