@@ -22,7 +22,7 @@ class PlayScene(BaseScene):
         self.tiles = pygame.sprite.Group()
 
         self.main_tileset = Tileset('tiles', 10, 15, mult=4)
-        self.decorations = Tileset('decor', 3, 3, mult=4)
+        self.decorations = Tileset('decor', 3, 4, mult=4)
         # self.objects = Tileset('objects', )
 
         self.floor_rects = []

@@ -27,6 +27,7 @@ class Tileset:
                     subsurface, new_size
                 )
                 self.tiles_surfaces[j + 1, i + 1] = result
+        print(len(self.tiles_surfaces))
 
     def get_tile(self, i, j):
         return self.tiles_surfaces[i, j]
