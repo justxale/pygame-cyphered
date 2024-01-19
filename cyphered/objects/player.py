@@ -73,7 +73,7 @@ class Player(AnimatedGameObject):
             if self.key_state[0] and self.key_state[1]:
                 self.switch_state('idle', 25)
             elif self.key_state[0] or self.key_state[1]:
-                self.switch_state('walk', 10)
+                self.switch_state('walk', 8)
             else:
                 self.switch_state('idle', 25)
 

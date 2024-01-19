@@ -37,7 +37,7 @@ class Description(BaseScene):
                         if not self.is_paused:
                             match self.level_name:
                                 case 'level1':
-                                    self.fade_and_switch_scene(CipherScene1(self.level_name, self.s))
+                                    self.switch_scene(CipherScene1(self.level_name, self.s))
                                 case 'level2':
                                     self.fade_and_switch_scene(TitleScene())
                             self.is_paused = True
