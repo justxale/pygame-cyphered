@@ -5,6 +5,7 @@ from ..data import Path
 from ..objects.base import GameObject
 from ..ui import Button
 from ..services.settings import Settings
+from ..services.settings import Settings
 from cyphered.ui.text import display_text
 
 

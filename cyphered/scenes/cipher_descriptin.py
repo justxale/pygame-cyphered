@@ -48,21 +48,23 @@ class RulesScene(BaseScene):
                      screen, step_x=200, step_y=-210, font_size=25)
         display_text("Чтобы открыть двери от локаций, вам нужно",
                      screen, step_x=200, step_y=-160, font_size=25)
-        display_text("Собирать цветочки, чтобы получить текст",
+        display_text("Собирать по элементам локаций части текста,",
                      screen, step_x=200, step_y=-110, font_size=25)
         display_text("Который надо будет расшифровать. Чтобы ",
                      screen, step_x=200, step_y=-60, font_size=25)
-        display_text("Проивзаимодействовать с цветком, вам следует",
+        display_text("Проивзаимодействовать с объектов, вам следует",
                      screen, step_x=200, step_y=-10, font_size=25)
         display_text("Подойти к нему вплотную и начать F. После ",
                      screen, step_x=200, step_y=40, font_size=25)
-        display_text("он пропадет с поля, а точнее окажется у вас",
+        display_text("этого Вам предоставится возможность рассмотреть",
                      screen, step_x=200, step_y=90, font_size=25)
-        display_text("в кармане:). После расшифровки текста, Вы ",
+        display_text("Его вбизи. Если Вы заметите на нем фрагмент",
                      screen, step_x=200, step_y=140, font_size=25)
-        display_text("Попадете на следуюший уровень, где вам тоже",
+        display_text("Текста, нажмите на него левой кнопкой мыши.",
                      screen, step_x=200, step_y=190, font_size=25)
-        display_text("надо будет собрать цветочки.",
+        display_text("После расшифровки текста, Вы сможете получить",
                      screen, step_x=200, step_y=240, font_size=25)
+        display_text("Ключ от следующего уровня и откроете дверь.",
+                     screen, step_x=200, step_y=290, font_size=25)
         display_text("Удачи в игре!",
-                     screen, step_x=-400, step_y=290, font_size=25)
+                     screen, step_x=-400, step_y=240, font_size=25)

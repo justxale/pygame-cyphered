@@ -1,4 +1,5 @@
 import pygame
+import datetime as dt
 
 from .base import BaseScene
 from .subscenes.pause import PauseSubscene
@@ -10,6 +11,8 @@ from ..services.save import Saver
 from ..services.sound import SoundMixer
 from ..ui.text import display_text
 from ..services.settings import Settings
+from ..services.number import Number
+from .cipher import CipherScene1
 
 
 class PlayScene(BaseScene):
@@ -32,6 +35,10 @@ class PlayScene(BaseScene):
         }
         self.triggers = {}
         self.interact_rects = []
+        self.interact_rects_flowers = []
+        self.interact_sprites = []
+
+        self.font = pygame.font.SysFont("Verdana", 20)
 
         self.bg = GameObject(self.all_sprites)
         self.bg.self_load_image(Path.sprite('bg'))
@@ -46,8 +53,34 @@ class PlayScene(BaseScene):
 
         self.text = ''
 
+        self.n = self.flowers_left()
+        self.num = Number(self.n)
+        f_p = Path.data("number_of_flowers", ext='txt')
+        with open(f_p, 'w', encoding='utf-8') as f_w:
+            print("6;5", file=f_w)
+
+        self.start = list(map(lambda x: list(map(int, x.split('.')))[0], str(dt.datetime.now().time()).split(':')))[1:]
+        self.start = self.start[0] * 60 + self.start[1]
+        print(self.start)
+
+    def flowers_left(self):
+        f_p = Path.data("number_of_flowers", ext='txt')
+        with open(f_p, 'r', encoding='utf-8') as f:
+            n = int(f.readline().split(';')[int(self.level_name[-1]) - 1])
+        return n
+
+    def flower_picked_up(self):
+        f_p = Path.data("number_of_flowers", ext='txt')
+        with open(f_p, 'r', encoding='utf-8') as f:
+            a = list(map(int, f.readline().split(';')))
+            if a[int(self.level_name[-1]) - 1] > 0:
+                a[int(self.level_name[-1]) - 1] -= 1
+        with open(f_p, 'w', encoding='utf-8') as f_w:
+            print(f"{a[0]};{a[1]}", file=f_w)
+
     def parse_player_data(self):
         level_data = Path.data(self.level_name, ext='txt')
+        print(level_data)
         with open(level_data, 'r', encoding='utf-8') as f:
             data = f.readline()
             player_data = data.strip().split(',')
@@ -61,6 +94,8 @@ class PlayScene(BaseScene):
             'right': []
         }
         self.interact_rects.clear()
+        self.interact_rects_flowers.clear()
+        self.interact_sprites.clear()
         self.triggers.clear()
 
         self.tiles.empty()
@@ -133,6 +168,14 @@ class PlayScene(BaseScene):
                         self.all_sprites, self.tiles, tile_layer=0
                     )
                     self.interact_rects.append(new_tile.rect)
+                elif 'fl' in types:
+                    new_tile = Tile(
+                        self.decorations, (int(i), int(j)),
+                        (x + constants.LEVEL_OFFSET[0], y + constants.LEVEL_OFFSET[1]),
+                        self.all_sprites, self.tiles, tile_layer=0
+                    )
+                    self.interact_rects_flowers.append(new_tile.rect)
+                    self.interact_sprites.append(new_tile)
                 else:
                     if 'lw' in types:
                         new_tile = Tile(
@@ -166,8 +209,6 @@ class PlayScene(BaseScene):
     def process_events(self, events):
         super().process_events(events)
         for event in events:
-            from .subscenes.furniture import Furniture
-            # self.open_subscene(Furniture(self, self.level_name, interaction_i))
             if event.type == pygame.KEYDOWN:
                 match event.key:
                     case pygame.K_LEFT:
@@ -201,8 +242,23 @@ class PlayScene(BaseScene):
                             elif self.subscene:
                                 self.subscene.destroy()
                                 self.is_paused = False
-                    # case pygame.K_f:
-                    #     interaction_f = self.player.rect.collidelist(self.)
+                    case pygame.K_f:
+                        interaction_f = self.player.rect.collidelist(self.interact_rects_flowers)
+                        if interaction_f != -1:
+                            self.interact_sprites[interaction_f].kill()
+                            self.interact_sprites.pop(interaction_f)
+                            self.interact_rects_flowers.remove(self.interact_rects_flowers[interaction_f])
+                            self.flower_picked_up()
+                        if self.flowers_left() == 0:
+                            now = list(map(lambda x: list(map(int, x.split('.')))[0],
+                                           str(dt.datetime.now().time()).split(':')))[1:]
+                            now = now[0] * 60 + now[1]
+                            now = abs(self.start - now)
+                            if self.level_name[-1] == '1':
+                                self.switch_scene(CipherScene1(self.level_name, now))
+                            else:
+                                from .end import EndScene
+                                self.switch_scene(EndScene(self.level_name, now))
                     case pygame.K_r:
                         self.generate_level()
                     case pygame.K_t:
@@ -223,8 +279,6 @@ class PlayScene(BaseScene):
         if self.triggers.get(1) and self.player.rect.collidelist(self.triggers[1]) != -1:
             if not self.is_paused:
                 match self.level_name:
-                    case 'level1':
-                        self.fade_and_switch_scene(PlayScene('level2'))
                     case 'level2':
                         self.fade_and_switch_scene(PlayScene('level1'))
                 self.is_paused = True
@@ -251,6 +305,11 @@ class PlayScene(BaseScene):
             self.player_group.update()
 
         display_text(self.text, screen, font_size=24, step_y=300, step_x=-350)
+
+        display_text("Осталось цветков:", screen, font_size=20, step_x=480, step_y=-370)
+
+        n = str(self.flowers_left())
+        self.num.render(screen, n)
 
     def on_destroy(self):
         self.all_sprites.empty()
